@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: bhagalpur-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: Raj@7744
+      MYSQL_DATABASE: bhagalpur_stays
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pRaj@7744"]
+      timeout: 10s
+      retries: 10
+
+  app:
+    build: .
+    container_name: bhagalpur-app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: mysql+pymysql://root:Raj@7744@mysql:3306/bhagalpur_stays
+      SECRET_KEY: DDmC99ZKKY2xUU49suzwjgYmegbcIAufdAqeUf9VXn9XVUtWKLfUes28puketpPWUYVZM3Xka_OA0tHchYdGMQ
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 30
+      REFRESH_TOKEN_EXPIRE_DAYS: 7
+      DEBUG: "False"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./app/static/images:/app/app/static/images
+      - ./app/static/uploads:/app/app/static/uploads
+
+volumes:
+  mysql_data:

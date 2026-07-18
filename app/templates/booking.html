@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Complete your booking — Bhagalpur Stays</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="../static/css/variables.css"><link rel="stylesheet" href="../static/css/global.css">
+  <link rel="stylesheet" href="../static/css/components.css"><link rel="stylesheet" href="../static/css/animations.css">
+  <link rel="stylesheet" href="../static/css/navbar.css"><link rel="stylesheet" href="../static/css/hotel-details.css">
+  <style>
+    @keyframes confetti-fall {
+      0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-slot"></div>
+  <main>
+    <div class="container" style="padding-top: var(--s-6);">
+      <nav class="breadcrumbs">
+        <a href="/">Home</a><span class="sep">/</span>
+        <a href="/hotels">Hotels</a><span class="sep">/</span>
+        <span class="current">Booking</span>
+      </nav>
+      <h1 style="margin-top: var(--s-3);">Complete your booking</h1>
+      <p class="muted" id="booking-summary">Loading...</p>
+      <div class="details-layout" style="margin-top: var(--s-6);">
+        <div>
+          <div class="flex" style="gap: 12px; margin-bottom: var(--s-6);">
+            <div class="chip active">1. Details</div>
+            <div class="chip">2. Payment</div>
+            <div class="chip">3. Confirmation</div>
+          </div>
+          <form class="grid" style="gap: var(--s-6);" id="booking-form" onsubmit="submitBooking(event)">
+            <!-- Date Selection -->
+            <div class="card"><div class="card-body">
+              <h3 style="font-family: var(--font-sans); margin-bottom: var(--s-4);">Select dates</h3>
+              <div class="grid" style="grid-template-columns: 1fr 1fr; gap: var(--s-4);">
+                <div class="form-group">
+                  <label class="form-label">Check-in</label>
+                  <input class="input" type="date" id="check-in-date" required onchange="updateBookingSummary()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Check-out</label>
+                  <input class="input" type="date" id="check-out-date" required onchange="updateBookingSummary()">
+                </div>
+              </div>
+              <div class="grid" style="grid-template-columns: 1fr 1fr; gap: var(--s-4); margin-top: var(--s-4);">
+                <div class="form-group">
+                  <label class="form-label">Rooms</label>
+                  <select class="input" id="num-rooms" onchange="updateBookingSummary()">
+                    <option value="1">1 Room</option>
+                    <option value="2">2 Rooms</option>
+                    <option value="3">3 Rooms</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Guests</label>
+                  <select class="input" id="num-guests" onchange="updateBookingSummary()">
+                    <option value="1">1 Adult</option>
+                    <option value="2" selected>2 Adults</option>
+                    <option value="3">3 Adults</option>
+                    <option value="4">4 Adults</option>
+                  </select>
+                </div>
+              </div>
+            </div></div>
+
+            <!-- Guest details -->
+            <div class="card"><div class="card-body">
+              <h3 style="font-family: var(--font-sans); margin-bottom: var(--s-4);">Guest details</h3>
+              <div class="grid" style="grid-template-columns: 1fr 1fr; gap: var(--s-4);">
+                <div class="form-group"><label class="form-label">Full name</label><input class="input" id="guest-name" required></div>
+                <div class="form-group"><label class="form-label">Email</label><input class="input" type="email" id="guest-email" required></div>
+                <div class="form-group"><label class="form-label">Phone</label><input class="input" type="tel" id="guest-phone" required></div>
+                <div class="form-group" style="grid-column: span 2;">
+                  <label class="form-label">Special requests <span class="muted">(optional)</span></label>
+                  <textarea class="textarea" id="special-requests" placeholder="Late check-in, extra pillows, etc."></textarea>
+                </div>
+              </div>
+            </div></div>
+
+            <!-- Coupon -->
+            <div class="card"><div class="card-body">
+              <h3 style="font-family: var(--font-sans); margin-bottom: var(--s-3);">Apply coupon</h3>
+              <div style="display:flex; gap: 8px;">
+                <input class="input" id="coupon-code" placeholder="Enter coupon code">
+                <button type="button" class="btn btn-outline" onclick="applyCoupon()">Apply</button>
+              </div>
+              <div class="flex wrap" style="gap: 6px; margin-top: var(--s-3);">
+                <button type="button" class="chip" onclick="document.getElementById('coupon-code').value='SILK500';applyCoupon()">SILK500 - ₹500 off</button>
+                <button type="button" class="chip" onclick="document.getElementById('coupon-code').value='WEEKEND10';applyCoupon()">WEEKEND10 - 10% off</button>
+                <button type="button" class="chip" onclick="document.getElementById('coupon-code').value='FIRST20';applyCoupon()">FIRST20 - 20% off</button>
+              </div>
+              <div id="coupon-message" style="margin-top: var(--s-2); font-size: var(--fs-sm);"></div>
+            </div></div>
+
+            <!-- Payment -->
+            <div class="card"><div class="card-body">
+              <h3 style="font-family: var(--font-sans); margin-bottom: var(--s-4);">Payment method</h3>
+              <label class="check" style="padding: 16px; border: 1px solid var(--border-strong); border-radius: var(--r-md); width: 100%; display:flex;">
+                <input type="radio" name="pay" value="pay_at_hotel" checked>
+                <span style="margin-left: 8px;"><strong>Pay at hotel</strong> · Reserve now, pay when you check in</span>
+              </label>
+            </div></div>
+
+            <label class="check" style="padding: 12px 0;"><input type="checkbox" required> I accept the <a href="/terms">Terms & Conditions</a> and <a href="/privacy-policy">Privacy Policy</a></label>
+            <button type="submit" class="btn btn-gold btn-lg" style="justify-self: start;" id="submit-btn">Confirm Booking</button>
+          </form>
+        </div>
+        <aside>
+          <div class="booking-card" id="booking-sidebar">
+            <div class="badge badge-gold" style="margin-bottom: 10px;">Best Price Guarantee</div>
+            <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600" style="width:100%; border-radius: var(--r-md); margin-bottom: var(--s-4);" id="sidebar-img" alt="">
+            <h3 style="font-family: var(--font-display); font-size: var(--fs-xl);" id="sidebar-name">Hotel</h3>
+            <div class="muted" style="font-size: var(--fs-sm); margin-bottom: var(--s-4);" id="sidebar-loc">Bhagalpur</div>
+            <div class="summary-row"><span>Check-in</span><span id="sidebar-checkin">-</span></div>
+            <div class="summary-row"><span>Check-out</span><span id="sidebar-checkout">-</span></div>
+            <div class="summary-row"><span>Room</span><span id="sidebar-room">-</span></div>
+            <div class="divider" style="margin: var(--s-3) 0;"></div>
+            <div class="summary-row"><span id="sidebar-price-label">₹0</span><span id="sidebar-subtotal">₹0</span></div>
+            <div class="summary-row"><span>Taxes (12%)</span><span id="sidebar-tax">₹0</span></div>
+            <div class="summary-row" id="discount-row" style="display:none;"><span>Coupon discount</span><span style="color: var(--success);" id="sidebar-discount">−₹0</span></div>
+            <div class="summary-row total"><span>Total</span><span id="sidebar-total">₹0</span></div>
+            <p class="muted" style="font-size: var(--fs-xs); margin-top: var(--s-3);">✓ Free cancellation until 24h before check-in</p>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- Success Celebration Banner -->
+  <div id="success-banner" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(6,10,23,0.92); z-index:999; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:24px;">
+    <div style="animation: float 2s ease-in-out infinite;">
+      <div style="font-size:80px; margin-bottom:16px;">🎉</div>
+    </div>
+    <h1 style="color:#fff; font-family:var(--font-display); font-size:clamp(28px,5vw,48px); margin-bottom:12px;">Congratulations!</h1>
+    <p style="color:var(--accent); font-size:var(--fs-xl); margin-bottom:8px;">Your Booking is Confirmed 🏨</p>
+    <p style="color:rgba(255,255,255,0.8); font-size:var(--fs-lg); margin-bottom:24px;" id="banner-ref">Booking Ref: ABH-2026-XXXX</p>
+    <p style="color:rgba(255,255,255,0.6); font-size:var(--fs-sm); margin-bottom:32px;">A confirmation has been sent to your email. See you in Bhagalpur!</p>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+      <a href="/my-bookings" class="btn btn-gold btn-lg">View My Bookings</a>
+      <a href="/hotels" class="btn btn-outline btn-lg" style="color:#fff; border-color:rgba(255,255,255,0.4);">Browse More Hotels</a>
+    </div>
+  </div>
+
+  <div id="footer-slot"></div>
+  <script src="../static/js/partials.js"></script>
+  <script>
+    var params = new URLSearchParams(location.search);
+    var hotelSlug = params.get('hotel') || 'ganga-vilas-palace';
+
+    var bookingData = {
+      hotel: null,
+      room: null,
+      pricePerNight: 1999,
+      nights: 1,
+      discount: 0,
+      rooms: 1
+    };
+
+    function getToken() {
+      return localStorage.getItem('access_token');
+    }
+
+    function updateBookingSummary() {
+      var checkInEl = document.getElementById('check-in-date');
+      var checkOutEl = document.getElementById('check-out-date');
+      var roomsEl = document.getElementById('num-rooms');
+
+      if (checkInEl && checkOutEl && checkInEl.value && checkOutEl.value) {
+        var checkIn = new Date(checkInEl.value);
+        var checkOut = new Date(checkOutEl.value);
+        var nights = Math.max(1, Math.round((checkOut - checkIn) / (1000 * 60 * 60 * 24)));
+        bookingData.nights = nights;
+        bookingData.rooms = roomsEl ? parseInt(roomsEl.value) : 1;
+
+        document.getElementById('sidebar-checkin').textContent = checkInEl.value;
+        document.getElementById('sidebar-checkout').textContent = checkOutEl.value;
+        document.getElementById('booking-summary').textContent = nights + ' night' + (nights > 1 ? 's' : '') + ' · ' + (bookingData.room ? bookingData.room.name : 'Room') + ' · ' + (document.getElementById('num-guests')?.value || 2) + ' Guests';
+      }
+      updatePrice();
+    }
+
+    function updatePrice() {
+      var base = bookingData.pricePerNight * bookingData.nights * bookingData.rooms;
+      var tax = Math.round(base * 0.12);
+      var total = base + tax - bookingData.discount;
+
+      document.getElementById('sidebar-price-label').textContent = '₹' + Math.round(bookingData.pricePerNight).toLocaleString('en-IN') + ' × ' + bookingData.nights + ' night' + (bookingData.nights > 1 ? 's' : '') + ' × ' + bookingData.rooms + ' room' + (bookingData.rooms > 1 ? 's' : '');
+      document.getElementById('sidebar-subtotal').textContent = '₹' + base.toLocaleString('en-IN');
+      document.getElementById('sidebar-tax').textContent = '₹' + tax.toLocaleString('en-IN');
+      document.getElementById('sidebar-total').textContent = '₹' + total.toLocaleString('en-IN');
+      document.getElementById('submit-btn').textContent = 'Confirm Booking · ₹' + total.toLocaleString('en-IN');
+
+      if (bookingData.discount > 0) {
+        document.getElementById('discount-row').style.display = 'flex';
+        document.getElementById('sidebar-discount').textContent = '−₹' + bookingData.discount.toLocaleString('en-IN');
+      }
+    }
+
+    async function loadBookingDetails() {
+      try {
+        var res = await fetch('/api/hotels/' + hotelSlug);
+        var hotel = await res.json();
+        bookingData.hotel = hotel;
+
+        if (hotel.room_types && hotel.room_types.length > 0) {
+          bookingData.room = hotel.room_types[0];
+          bookingData.pricePerNight = hotel.room_types[0].base_price;
+        } else {
+          bookingData.pricePerNight = hotel.min_price || 1999;
+        }
+
+        var today = new Date();
+        today.setDate(today.getDate() + 1);
+        var tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById('check-in-date').value = today.toISOString().split('T')[0];
+        document.getElementById('check-in-date').min = new Date().toISOString().split('T')[0];
+        document.getElementById('check-out-date').value = tomorrow.toISOString().split('T')[0];
+        document.getElementById('check-out-date').min = tomorrow.toISOString().split('T')[0];
+
+        document.getElementById('sidebar-img').src = (hotel.images && hotel.images.length) ? hotel.images[0].image_url : 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600';
+        document.getElementById('sidebar-name').textContent = hotel.name;
+        document.getElementById('sidebar-loc').textContent = (hotel.area_name || 'Bhagalpur') + ', Bihar';
+        document.getElementById('sidebar-room').textContent = bookingData.room ? bookingData.room.name : 'Standard Room';
+
+        updateBookingSummary();
+      } catch(e) {
+        console.error('Failed to load hotel:', e);
+      }
+    }
+
+    async function applyCoupon() {
+      var code = document.getElementById('coupon-code').value.trim();
+      if (!code) return;
+      var base = bookingData.pricePerNight * bookingData.nights * bookingData.rooms;
+      try {
+        var res = await fetch('/api/coupons/validate?code=' + encodeURIComponent(code) + '&amount=' + base);
+        var data = await res.json();
+        if (data.valid) {
+          bookingData.discount = data.discount_amount;
+          document.getElementById('coupon-message').innerHTML = '<span style="color:var(--success);">✓ Saved ₹' + data.discount_amount.toLocaleString('en-IN') + '</span>';
+          updatePrice();
+        } else {
+          document.getElementById('coupon-message').innerHTML = '<span style="color:var(--danger);">' + data.message + '</span>';
+        }
+      } catch(e) {
+        window.toast('Failed to validate coupon', 'error');
+      }
+    }
+
+    function createConfetti() {
+      var colors = ['#d4a437', '#1e3a8a', '#e6bd5c', '#3b5fdd', '#f2d488', '#6a86ea', '#ffffff'];
+      for (var i = 0; i < 80; i++) {
+        var confetti = document.createElement('div');
+        confetti.style.cssText = 
+          'position:fixed;top:-10px;left:' + Math.random() * 100 + '%;' +
+          'width:' + (Math.random() * 10 + 5) + 'px;' +
+          'height:' + (Math.random() * 10 + 5) + 'px;' +
+          'background:' + colors[Math.floor(Math.random() * colors.length)] + ';' +
+          'z-index:1000;border-radius:' + (Math.random() > 0.5 ? '50%' : '2px') + ';' +
+          'animation: confetti-fall ' + (Math.random() * 2 + 2) + 's linear forwards;' +
+          'animation-delay:' + Math.random() + 's;';
+        document.body.appendChild(confetti);
+        setTimeout(function() { confetti.remove(); }, 4000);
+      }
+    }
+
+    async function submitBooking(e) {
+      e.preventDefault();
+      window.showLoading();
+
+      var token = getToken();
+      if (!token) {
+        window.hideLoading();
+        window.toast('Please login to book', 'error');
+        setTimeout(function() { location.href = '/login'; }, 1000);
+        return;
+      }
+
+      if (!bookingData.hotel) {
+        window.hideLoading();
+        window.toast('Hotel details not loaded. Please refresh.', 'error');
+        return;
+      }
+
+      var payload = {
+        hotel_id: bookingData.hotel.id,
+        room_type_id: bookingData.room ? bookingData.room.id : 1,
+        check_in: document.getElementById('check-in-date').value,
+        check_out: document.getElementById('check-out-date').value,
+        number_of_rooms: parseInt(document.getElementById('num-rooms').value) || 1,
+        guests: parseInt(document.getElementById('num-guests').value) || 2,
+        guest_name: document.getElementById('guest-name').value,
+        guest_email: document.getElementById('guest-email').value,
+        guest_phone: document.getElementById('guest-phone').value,
+        special_requests: document.getElementById('special-requests').value || null,
+        coupon_code: bookingData.discount > 0 ? document.getElementById('coupon-code').value : null
+      };
+
+      try {
+        var res = await fetch('/api/bookings/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify(payload)
+        });
+        var data = await res.json();
+        window.hideLoading();
+        if (res.ok) {
+          // Show celebration banner
+          document.getElementById('banner-ref').textContent = 'Booking Ref: ' + data.booking_ref;
+          var banner = document.getElementById('success-banner');
+          banner.style.display = 'flex';
+          createConfetti();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          window.toast(data.detail || 'Booking failed', 'error');
+        }
+      } catch(err) {
+        window.hideLoading();
+        window.toast('Network error', 'error');
+      }
+    }
+
+    loadBookingDetails();
+  </script>
+  <script type="module" src="../static/js/app.js"></script>
+</body>
+</html>

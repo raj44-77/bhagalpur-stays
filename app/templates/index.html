@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bhagalpur Stays — Book Hotels in Bhagalpur, Bihar</title>
+  <meta name="description" content="Bhagalpur's largest hotel booking platform. Discover, compare and book luxury, budget, family and business hotels with instant confirmation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&display=swap">
+  <link rel="stylesheet" href="../static/css/variables.css">
+  <link rel="stylesheet" href="../static/css/global.css">
+  <link rel="stylesheet" href="../static/css/components.css">
+  <link rel="stylesheet" href="../static/css/animations.css">
+  <link rel="stylesheet" href="../static/css/navbar.css">
+  <link rel="stylesheet" href="../static/css/home.css">
+</head>
+<body>
+  <div id="nav-slot"></div>
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-inner">
+        <span class="eyebrow a-fade-up">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          #1 Hotel Platform in Bhagalpur
+        </span>
+        <h1 class="a-fade-up a-delay-1">
+          Stay in the heart of<br>
+          <span class="accent">Silk City</span> with confidence.
+        </h1>
+        <p class="a-fade-up a-delay-2">
+          From luxury riverfront resorts to cozy homestays — discover, compare and book
+          every hotel in Bhagalpur, all in one place.
+        </p>
+        <div class="hero-stats a-fade-up a-delay-3">
+          <div class="stat"><div class="num"><span data-count="8" data-suffix="">0</span></div><div class="label">Verified Hotels</div></div>
+          <div class="stat"><div class="num"><span data-count="5" data-suffix="">0</span></div><div class="label">Bookings Made</div></div>
+          <div class="stat"><div class="num"><span data-count="5.0" data-suffix="/5">0</span></div><div class="label">Avg. Rating</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEARCH -->
+    <div class="hero-search-wrap a-scale-in a-delay-3">
+      <form class="search-box" onsubmit="event.preventDefault(); location.href='/hotels'">
+        <div class="search-field">
+          <label>Destination</label>
+          <input type="text" placeholder="Bhagalpur, Bihar" value="Bhagalpur, Bihar">
+        </div>
+        <div class="search-field">
+          <label>Check-in</label>
+          <input type="date">
+        </div>
+        <div class="search-field">
+          <label>Check-out</label>
+          <input type="date">
+        </div>
+        <div class="search-field">
+          <label>Guests · Rooms</label>
+          <select>
+            <option>2 Adults · 1 Room</option>
+            <option>1 Adult · 1 Room</option>
+            <option>2 Adults · 2 Rooms</option>
+            <option>4 Adults · 2 Rooms</option>
+          </select>
+        </div>
+        <button class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+          Search Hotels
+        </button>
+      </form>
+    </div>
+
+    <!-- CATEGORIES -->
+    <section>
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Browse by category</span>
+          <h2>Find the perfect stay</h2>
+          <p>Whether you're travelling for business, family or a romantic getaway — we've curated the best of Bhagalpur for you.</p>
+        </div>
+        <div class="category-row" id="categories-row"></div>
+      </div>
+    </section>
+
+    <!-- POPULAR HOTELS -->
+    <section class="tinted">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Guest favourites</span>
+          <h2>Popular hotels in Bhagalpur</h2>
+          <p>Handpicked by travellers, rated by real reviews.</p>
+        </div>
+        <div class="hotel-grid" id="popular-grid"></div>
+        <div style="text-align:center; margin-top: var(--s-8);">
+          <a href="/hotels" class="btn btn-outline btn-lg silk-pulse">View all hotels →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Silk Divider -->
+    <hr class="silk-divider" style="max-width: 200px; margin: 0 auto;">
+
+    <!-- DESTINATIONS -->
+    <section>
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Popular destinations</span>
+          <h2>Explore neighbourhoods</h2>
+        </div>
+        <div class="destinations" data-reveal>
+          <div class="destination">
+            <img src="../static/images/attractions/vikramshila.jpg" alt="Vikramshila Ruins">
+            <div class="caption"><h4>Vikramshila Ruins</h4><p>Ancient Buddhist University</p></div>
+          </div>
+          <div class="destination">
+            <img src="../static/images/attractions/sultanganj.jpg" alt="Sultanganj">
+            <div class="caption"><h4>Sultanganj</h4><p>Ajgaibinath Temple</p></div>
+          </div>
+          <div class="destination">
+            <img src="../static/images/attractions/riverfront.jpg" alt="Riverfront">
+            <div class="caption"><h4>Barari Riverfront</h4><p>Ganga Ghats</p></div>
+          </div>
+          <div class="destination">
+            <img src="../static/images/attractions/maharshi-mehi-ashram.jpg" alt="Maharshi Mehi Ashram">
+            <div class="caption"><h4>Kuppa Ghat</h4><p>Maharshi Mehi Ashram</p></div>
+          </div>
+          <div class="destination">
+            <img src="../static/images/attractions/ghantaghar.jpg" alt="Ghantaghar">
+            <div class="caption"><h4>Ghantaghar</h4><p>City Center</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <section class="tinted">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Why choose us</span>
+          <h2>Booking made effortless</h2>
+        </div>
+        <div class="features">
+          <div class="feature" data-reveal>
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="26" height="26"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <h4>Verified Hotels</h4>
+            <p>Every hotel is physically verified for quality and safety by our local team.</p>
+          </div>
+          <div class="feature" data-reveal>
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="26" height="26"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+            <h4>Best Price Guarantee</h4>
+            <p>Find a lower price? We match it and give you 10% off — no questions asked.</p>
+          </div>
+          <div class="feature" data-reveal>
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="26" height="26"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+            <h4>Instant Confirmation</h4>
+            <p>No waiting. Book and get instant confirmation with digital invoice on your phone.</p>
+          </div>
+          <div class="feature" data-reveal>
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="26" height="26"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.37 1.9.72 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.35 1.85.59 2.81.72A2 2 0 0122 16.92z"/></svg></div>
+            <h4>24×7 Local Support</h4>
+            <p>Hindi & English support from our Bhagalpur team, anytime you need help.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section>
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">What travellers say</span>
+          <h2>Loved by thousands</h2>
+        </div>
+        <div class="testimonials">
+          <div class="testimonial" data-reveal>
+            <div class="stars" style="margin-bottom: 12px;">★★★★★</div>
+            <p>"Booked the Ganga Vilas Palace for our anniversary. The riverside view was breathtaking. Payment and check-in were seamless."</p>
+            <div class="who"><div class="avatar">P</div><div><div class="name">Priya Sharma</div><div class="role">Kolkata</div></div></div>
+          </div>
+          <div class="testimonial" data-reveal>
+            <div class="stars" style="margin-bottom: 12px;">★★★★★</div>
+            <p>"Best rates in Bhagalpur — hands down. Local support helped us reschedule with zero hassle when our train was delayed."</p>
+            <div class="who"><div class="avatar">R</div><div><div class="name">Rahul Verma</div><div class="role">Patna</div></div></div>
+          </div>
+          <div class="testimonial" data-reveal>
+            <div class="stars" style="margin-bottom: 12px;">★★★★★</div>
+            <p>"As a hotel owner, the partner dashboard doubled our bookings in the first quarter. Simple, powerful and transparent."</p>
+            <div class="who"><div class="avatar">A</div><div><div class="name">Amit Kumar</div><div class="role">Hotel Owner, Adampur</div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER BLOCK -->
+    <section>
+      <div class="container">
+        <div class="newsletter-block" data-reveal="scale">
+          <div>
+            <span class="eyebrow" style="color: var(--accent);">Get 20% off your first booking</span>
+            <h2 style="margin-top: 8px;">Join the Bhagalpur Stays family</h2>
+            <p>Exclusive weekend deals, insider travel tips, and early access to new hotels — right in your inbox.</p>
+          </div>
+          <form class="newsletter" onsubmit="event.preventDefault(); window.toast('Welcome aboard!','success')">
+            <input type="email" placeholder="you@example.com" aria-label="Email" required>
+            <button class="btn btn-gold">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="tinted">
+      <div class="container" style="max-width: 860px;">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Frequently asked</span>
+          <h2>Questions, answered</h2>
+        </div>
+        <div id="faq-list"></div>
+        <div class="text-center" style="margin-top: var(--s-6);">
+          <a href="/faq" class="btn btn-outline">See all FAQs</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="footer-slot"></div>
+  <script src="../static/js/partials.js"></script>
+  <script>
+    var catIcons = {
+      sparkles: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="26" height="26"><path d="M12 3l1.9 4.8L18 9.7l-4.1 1.9L12 16.4l-1.9-4.8L6 9.7l4.1-1.9L12 3zM19 15l.8 2 2 .8-2 .8L19 21l-.8-2.4-2-.8 2-.8L19 15zM5 15l.8 2 2 .8-2 .8L5 21l-.8-2.4-2-.8 2-.8L5 15z"/></svg>',
+      wallet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="26" height="26"><path d="M21 12V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2v-1"/><path d="M22 12h-6a2 2 0 000 4h6v-4z"/></svg>',
+      users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="26" height="26"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>',
+      briefcase: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="26" height="26"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>',
+      heart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="26" height="26"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>',
+      plane: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="26" height="26"><path d="M17.8 19.2L16 11l3.5-3.5A2.12 2.12 0 0018 4l-4 4L6 6l-2 2 6 4-4 6 2 2 4-2 4 6 2-2z"/></svg>',
+    };
+
+    var categories = [
+      { key: "luxury", label: "Luxury Stays", icon: "sparkles" },
+      { key: "budget", label: "Budget Hotels", icon: "wallet" },
+      { key: "family", label: "Family Friendly", icon: "users" },
+      { key: "business", label: "Business Hotels", icon: "briefcase" },
+      { key: "couple", label: "Couple Friendly", icon: "heart" },
+      { key: "nearby", label: "Near Attractions", icon: "plane" }
+    ];
+
+    var catHtml = '';
+    for (var c = 0; c < categories.length; c++) {
+      catHtml += '<a class="cat-card" data-reveal href="/hotels?tag=' + categories[c].key + '">' +
+        '<div class="cat-icon">' + (catIcons[categories[c].icon] || '') + '</div>' +
+        '<h4>' + categories[c].label + '</h4>' +
+        '<p>Curated stays</p>' +
+      '</a>';
+    }
+    document.getElementById('categories-row').innerHTML = catHtml;
+
+    async function loadPopularHotels() {
+      try {
+        var res = await fetch('/api/hotels/?limit=6');
+        var data = await res.json();
+        var hotels = data.hotels || [];
+        var html = '';
+        for (var i = 0; i < Math.min(hotels.length, 6); i++) {
+          var h = hotels[i];
+          var img = h.primary_image || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600';
+          var price = h.min_price || 1999;
+          var strike = Math.round(price * 1.3);
+          var slug = h.slug || h.id;
+          html += '<a class="hotel-card silk-sweep" href="/hotel-details?slug=' + slug + '" style="opacity:1;transform:none;">' +
+            '<div class="thumb">' +
+              '<img src="' + img + '" alt="' + h.name + '" loading="lazy">' +
+              '<div class="thumb-badges">' +
+                (h.is_featured ? '<span class="badge badge-gold">Featured</span>' : '') +
+                (h.star_rating >= 5 ? '<span class="badge badge-dark">Luxury</span>' : '') +
+              '</div>' +
+              '<button class="wishlist" aria-label="Add to wishlist" onclick="event.preventDefault();event.stopPropagation();">' +
+                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>' +
+              '</button>' +
+            '</div>' +
+            '<div class="info">' +
+              '<div class="name">' + h.name + '</div>' +
+              '<div class="loc">📍 ' + (h.area_name || 'Bhagalpur') + ', Bihar</div>' +
+              '<div class="amenities"><span>⭐ ' + h.star_rating + ' Star</span></div>' +
+              '<div class="foot">' +
+                '<div class="price">' +
+                  '<div class="strike">₹' + strike.toLocaleString('en-IN') + '</div>' +
+                  '<div class="amount">₹' + price.toLocaleString('en-IN') + '</div>' +
+                  '<div class="per">per night</div>' +
+                '</div>' +
+                '<span class="rating-chip">★ ' + (h.avg_rating || 'New') + '</span>' +
+              '</div>' +
+            '</div>' +
+          '</a>';
+        }
+        document.getElementById('popular-grid').innerHTML = html;
+      } catch(e) {}
+    }
+    loadPopularHotels();
+
+    var faqs = [
+      { q: "How do I book a hotel on Bhagalpur Stays?", a: "Search for your dates, pick a hotel, choose a room, fill guest details and confirm. You get instant confirmation on email and SMS." },
+      { q: "Can I cancel my booking?", a: "Yes. Most hotels offer free cancellation up to 24 hours before check-in." },
+      { q: "Is there a lowest price guarantee?", a: "Yes. If you find a lower price, we'll match it and give you 10% off." },
+      { q: "Do you support pay-at-hotel?", a: "Absolutely. Choose 'Pay at Hotel' during checkout to reserve without online payment." },
+    ];
+    var faqHtml = '';
+    for (var f = 0; f < faqs.length; f++) {
+      faqHtml += '<div class="accordion">' +
+        '<button class="accordion-head" type="button">' +
+          '<span>' + faqs[f].q + '</span>' +
+          '<span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M6 9l6 6 6-6"/></svg></span>' +
+        '</button>' +
+        '<div class="accordion-body"><div class="accordion-body-inner">' + faqs[f].a + '</div></div>' +
+      '</div>';
+    }
+    document.getElementById('faq-list').innerHTML = faqHtml;
+  </script>
+  <script type="module" src="../static/js/app.js"></script>
+</body>
+</html>

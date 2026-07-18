@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hotels in Bhagalpur — Bhagalpur Stays</title>
+  <meta name="description" content="Browse verified hotels in Bhagalpur. Book with best price guarantee.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="../static/css/variables.css">
+  <link rel="stylesheet" href="../static/css/global.css">
+  <link rel="stylesheet" href="../static/css/components.css">
+  <link rel="stylesheet" href="../static/css/animations.css">
+  <link rel="stylesheet" href="../static/css/navbar.css">
+  <link rel="stylesheet" href="../static/css/hotels.css">
+</head>
+<body>
+  <div id="nav-slot"></div>
+  <main>
+    <section class="listing-hero">
+      <div class="container">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a><span class="sep">/</span>
+          <span class="current">Hotels in Bhagalpur</span>
+        </nav>
+        <h1>Hotels in Bhagalpur, Bihar</h1>
+        <p style="color:rgba(255,255,255,.75); margin-top:8px;">Verified properties · Free cancellation on most bookings</p>
+      </div>
+    </section>
+    <div class="container">
+      <div class="listing-wrap">
+        <aside class="filters">
+          <h3>Filters</h3>
+          <div class="filter-group">
+            <h4>Price per night</h4>
+            <input type="range" class="range" min="500" max="10000" value="7000" step="500" id="price-range">
+            <div class="range-vals"><span>₹500</span><span id="price-val">₹7,000</span></div>
+          </div>
+          <div class="filter-group">
+            <h4>Star Rating</h4>
+            <div class="filter-list">
+              <label class="check"><input type="checkbox"> 5 Star</label>
+              <label class="check"><input type="checkbox" checked> 4 Star</label>
+              <label class="check"><input type="checkbox" checked> 3 Star</label>
+              <label class="check"><input type="checkbox"> 2 Star</label>
+            </div>
+          </div>
+          <div class="filter-group">
+            <h4>Area</h4>
+            <div class="filter-list">
+              <label class="check"><input type="checkbox"> Adampur</label>
+              <label class="check"><input type="checkbox"> Tilkamanjhi</label>
+              <label class="check"><input type="checkbox"> Barari</label>
+              <label class="check"><input type="checkbox"> Nathnagar</label>
+              <label class="check"><input type="checkbox"> Sultanganj</label>
+              <label class="check"><input type="checkbox"> Champanagar</label>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" style="margin-top: var(--s-5);">Apply Filters</button>
+          <button class="btn btn-ghost btn-block" style="margin-top: 8px;">Reset</button>
+        </aside>
+        <div>
+          <div class="results-head">
+            <div class="results-count"><strong id="result-count">0</strong> hotels found</div>
+            <div class="flex items-center" style="gap: 10px;">
+              <label class="muted" style="font-size: var(--fs-sm);">Sort by</label>
+              <select class="select" style="width: auto; padding: 8px 32px 8px 14px;" id="sort-select">
+                <option value="popularity">Popularity</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="rating">Top Rated</option>
+              </select>
+            </div>
+          </div>
+          <div class="results" id="results"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div id="footer-slot"></div>
+  <script src="../static/js/partials.js"></script>
+  <script>
+    async function loadHotels() {
+      try {
+        var res = await fetch('/api/hotels/?limit=50');
+        var data = await res.json();
+        renderHotels(data.hotels || []);
+      } catch(e) {
+        console.error('Failed to load hotels:', e);
+      }
+    }
+
+    function renderHotels(hotels) {
+      var list = document.getElementById('results');
+      document.getElementById('result-count').textContent = hotels.length;
+      if (!hotels.length) {
+        list.innerHTML = '<p class="muted text-center" style="padding:40px;">No hotels found.</p>';
+        return;
+      }
+      var html = '';
+      for (var i = 0; i < hotels.length; i++) {
+        var h = hotels[i];
+        var img = h.primary_image || 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600';
+        var price = h.min_price || 1999;
+        var strike = Math.round(price * 1.3);
+        var slug = h.slug || h.id;
+        html += '<a class="hotel-row silk-sweep" href="/hotel-details?slug=' + slug + '">' +
+          '<div class="thumb">' +
+            '<img src="' + img + '" alt="' + h.name + '">' +
+            '<div class="thumb-badges">' +
+              (h.is_featured ? '<span class="badge badge-gold">Featured</span>' : '') +
+              (h.star_rating >= 5 ? '<span class="badge badge-dark">Luxury</span>' : '') +
+            '</div>' +
+          '</div>' +
+          '<div class="body">' +
+            '<div class="name">' + h.name + '</div>' +
+            '<div class="loc">📍 ' + (h.area_name || 'Bhagalpur') + ', Bihar</div>' +
+            '<div class="amenity-tags">' +
+              '<span class="chip">⭐ ' + h.star_rating + ' Star</span>' +
+              '<span class="chip">📝 ' + (h.review_count || 0) + ' reviews</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="side">' +
+            '<div class="rating-block">' +
+              '<span class="rating-chip">★ ' + (h.avg_rating || 'New') + '</span>' +
+              '<span class="reviews">' + (h.review_count || 0) + ' reviews</span>' +
+            '</div>' +
+            '<div class="price">' +
+              '<div class="strike">₹' + strike.toLocaleString('en-IN') + '</div>' +
+              '<div class="amount">₹' + price.toLocaleString('en-IN') + '</div>' +
+              '<div class="per">per night</div>' +
+            '</div>' +
+            '<div class="actions">' +
+              '<a href="/booking?hotel=' + slug + '" class="btn btn-primary btn-sm" onclick="event.stopPropagation()">Book Now</a>' +
+              '<span class="btn btn-outline btn-sm">View Details</span>' +
+            '</div>' +
+          '</div>' +
+        '</a>';
+      }
+      list.innerHTML = html;
+    }
+
+    document.getElementById('sort-select').addEventListener('change', function() {
+      var rows = Array.from(document.querySelectorAll('.hotel-row'));
+      var parent = document.getElementById('results');
+      var sortBy = this.value;
+      rows.sort(function(a, b) {
+        var getPrice = function(el) { return parseInt((el.querySelector('.amount')?.textContent || '0').replace(/[^0-9]/g, '')); };
+        var getRating = function(el) { return parseFloat((el.querySelector('.rating-chip')?.textContent || '0').replace(/[^0-9.]/g, '')); };
+        if (sortBy === 'price-low') return getPrice(a) - getPrice(b);
+        if (sortBy === 'price-high') return getPrice(b) - getPrice(a);
+        if (sortBy === 'rating') return getRating(b) - getRating(a);
+        return 0;
+      });
+      rows.forEach(function(r) { parent.appendChild(r); });
+    });
+
+    document.getElementById('price-range').addEventListener('input', function() {
+      document.getElementById('price-val').textContent = '₹' + (+this.value).toLocaleString('en-IN');
+    });
+
+    loadHotels();
+  </script>
+  <script type="module" src="../static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Partner Dashboard — Bhagalpur Stays</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="../static/css/variables.css"><link rel="stylesheet" href="../static/css/global.css">
+  <link rel="stylesheet" href="../static/css/components.css"><link rel="stylesheet" href="../static/css/animations.css">
+  <link rel="stylesheet" href="../static/css/dashboard.css">
+</head>
+<body style="background: var(--bg-muted);">
+  <div class="dash">
+    <aside class="dash-side" id="side">
+      <a class="logo" href="/"><span class="logo-mark">A</span><span>Bhagalpur Stays<small>Partner Portal</small></span></a>
+      <nav class="side-nav">
+        <span class="group-label">Management</span>
+        <a href="#" class="active">📊 Dashboard</a>
+        <a href="/hotels">🏨 My Hotels</a>
+        <span class="group-label">Finance</span>
+        <a href="#">💰 Revenue</a>
+        <span class="group-label">Account</span>
+        <a href="/profile">👤 Profile</a>
+        <a href="#" onclick="doLogout()" style="color:var(--danger);">🚪 Logout</a>
+      </nav>
+      <div class="side-footer">
+        <div class="flex items-center" style="gap:10px;"><div class="avatar" style="background:var(--grad-gold); color:#2a1a04;" id="owner-avatar">O</div>
+        <div><div style="font-weight:700; color:#fff; font-size:var(--fs-sm);" id="owner-name">Owner</div><div style="opacity:.6; font-size:11px;">Hotel Partner</div></div></div>
+      </div>
+    </aside>
+    <div class="dash-main">
+      <header class="dash-top">
+        <button class="nav-icon-btn dash-side-toggle" onclick="document.getElementById('side').classList.toggle('open')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><input placeholder="Search bookings…"></div>
+        <div class="top-actions"><button class="nav-icon-btn" data-theme-toggle><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button></div>
+      </header>
+      <div class="dash-body">
+        <div class="page-head"><h1>Hotel overview</h1><p>Your performance at a glance</p></div>
+        <div class="kpis" id="kpi-cards">
+          <div class="kpi"><div class="head"><div><div class="label">Loading...</div><div class="val">-</div></div></div></div>
+        </div>
+        <div class="panel" style="margin-top: var(--s-5);">
+          <div class="panel-head">
+            <h3>Recent Bookings</h3>
+            <button id="mark-all-btn" class="btn btn-sm" style="background:var(--danger);color:#fff;padding:6px 16px;" onclick="markAllPaid()">Mark All as Paid</button>
+          </div>
+          <div class="table-wrap" style="border:0;">
+            <table class="table"><thead><tr><th>Booking Ref</th><th>Guest</th><th>Room</th><th>Check-in</th><th>Amount</th><th>Status</th><th>Payment</th></tr></thead>
+              <tbody id="bookings-table">
+                <tr><td colspan="7" class="text-center muted">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function getToken() {
+      return localStorage.getItem('access_token');
+    }
+
+    function doLogout() {
+      localStorage.clear();
+      window.toast('Logged out', 'info');
+      setTimeout(function() { location.href = '/'; }, 500);
+    }
+
+    async function loadDashboard() {
+      var token = getToken();
+      if (!token) {
+        document.querySelector('.dash-body').innerHTML = '<div class="text-center" style="padding:100px;"><h2>Please login</h2><a href="/login" class="btn btn-primary">Login</a></div>';
+        return;
+      }
+
+      try {
+        var profileRes = await fetch('/api/users/me', { headers: { 'Authorization': 'Bearer ' + token } });
+        var profile = await profileRes.json();
+        document.getElementById('owner-name').textContent = profile.full_name || 'Owner';
+        document.getElementById('owner-avatar').textContent = (profile.full_name || 'O').charAt(0).toUpperCase();
+      } catch(e) {}
+
+      try {
+        var res = await fetch('/api/dashboard/owner', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (!res.ok) {
+          document.querySelector('.dash-body').innerHTML = '<div class="text-center" style="padding:100px;"><h2>Owner access required</h2><a href="/" class="btn btn-primary">Go Home</a></div>';
+          return;
+        }
+        var data = await res.json();
+        renderDashboard(data);
+      } catch(e) {
+        console.error(e);
+      }
+    }
+
+    function renderDashboard(data) {
+      var kpis = data.kpis || {};
+      document.getElementById('kpi-cards').innerHTML =
+        '<div class="kpi"><div class="head"><div><div class="label">Total Bookings</div><div class="val" style="margin-top:6px;">' + (kpis.total_bookings || 0) + '</div></div><div class="icon-badge">📦</div></div></div>' +
+        '<div class="kpi gold"><div class="head"><div><div class="label">Revenue (Paid)</div><div class="val" style="margin-top:6px;">₹' + parseInt(kpis.monthly_revenue || 0).toLocaleString('en-IN') + '</div></div><div class="icon-badge">💰</div></div></div>' +
+        '<div class="kpi success"><div class="head"><div><div class="label">Avg Rating</div><div class="val" style="margin-top:6px;">★ ' + (kpis.avg_rating || '0') + '</div></div><div class="icon-badge">⭐</div></div></div>' +
+        '<div class="kpi"><div class="head"><div><div class="label">My Hotels</div><div class="val" style="margin-top:6px;">' + (kpis.total_hotels || 0) + '</div></div><div class="icon-badge">🏨</div></div></div>';
+
+      var bookings = data.recent_bookings || [];
+      var tableHtml = '';
+      var hasUnpaid = false;
+
+      if (bookings.length === 0) {
+        tableHtml = '<tr><td colspan="7" class="text-center muted">No bookings yet</td></tr>';
+      } else {
+        for (var i = 0; i < bookings.length; i++) {
+          var b = bookings[i];
+          var pill = b.status === 'confirmed' ? '<span class="pill confirmed">Confirmed</span>' :
+                     b.status === 'checked_out' ? '<span class="pill paid">Completed</span>' :
+                     b.status === 'pending' ? '<span class="pill pending">Pending</span>' :
+                     '<span class="pill">' + b.status + '</span>';
+
+          var payCol = '';
+          if (b.payment_status === 'paid') {
+            payCol = '<span class="pill" style="background:var(--success);color:#fff;">Paid ✓</span>';
+          } else if (b.status !== 'cancelled') {
+            hasUnpaid = true;
+            payCol = '<span class="pill" style="background:var(--danger);color:#fff;">Unpaid</span>';
+          } else {
+            payCol = '<span class="pill cancelled">N/A</span>';
+          }
+
+          tableHtml += '<tr>' +
+            '<td>' + b.booking_ref + '</td>' +
+            '<td>' + (b.guest_name || 'N/A') + '</td>' +
+            '<td>' + (b.room_type || 'N/A') + '</td>' +
+            '<td>' + b.check_in + '</td>' +
+            '<td>₹' + parseInt(b.total_amount).toLocaleString('en-IN') + '</td>' +
+            '<td>' + pill + '</td>' +
+            '<td>' + payCol + '</td>' +
+          '</tr>';
+        }
+      }
+      document.getElementById('bookings-table').innerHTML = tableHtml;
+
+      // Update button state
+      var btn = document.getElementById('mark-all-btn');
+      if (!hasUnpaid && bookings.length > 0) {
+        btn.style.background = 'var(--success)';
+        btn.textContent = '✓ All Paid';
+        btn.disabled = true;
+      } else if (hasUnpaid) {
+        btn.style.background = 'var(--danger)';
+        btn.textContent = 'Mark All as Paid';
+        btn.disabled = false;
+      } else {
+        btn.style.display = 'none';
+      }
+    }
+
+    async function markAllPaid() {
+      if (!confirm('Mark all unpaid bookings as paid?')) return;
+      var token = getToken();
+      var btn = document.getElementById('mark-all-btn');
+      btn.disabled = true;
+      btn.textContent = 'Processing...';
+
+      var rows = document.querySelectorAll('#bookings-table tr');
+      var count = 0;
+
+      for (var i = 0; i < rows.length; i++) {
+        var cells = rows[i].querySelectorAll('td');
+        if (cells.length < 7) continue;
+        var payCell = cells[6];
+        if (payCell.textContent.trim() === 'Unpaid') {
+          var refCell = cells[0];
+          // Extract booking ID from the ref or fetch all and match
+          // Simple approach: reload dashboard after marking
+          count++;
+        }
+      }
+
+      // Mark all unpaid bookings via API by fetching and marking each
+      try {
+        var res = await fetch('/api/dashboard/owner', { headers: { 'Authorization': 'Bearer ' + token } });
+        var data = await res.json();
+        var bookings = data.recent_bookings || [];
+        var marked = 0;
+
+        for (var b = 0; b < bookings.length; b++) {
+          if (bookings[b].payment_status !== 'paid' && bookings[b].status !== 'cancelled') {
+            try {
+              var payRes = await fetch('/api/payments/mark-paid/' + bookings[b].id, {
+                method: 'POST',
+                headers: { 'Authorization': 'Bearer ' + token }
+              });
+              if (payRes.ok) marked++;
+            } catch(e) {}
+          }
+        }
+
+        if (marked > 0) {
+          window.toast(marked + ' bookings marked as paid!', 'success');
+          loadDashboard();
+        } else {
+          window.toast('All bookings already paid', 'info');
+          btn.disabled = false;
+          btn.textContent = 'Mark All as Paid';
+        }
+      } catch(e) {
+        window.toast('Failed', 'error');
+        btn.disabled = false;
+        btn.textContent = 'Mark All as Paid';
+      }
+    }
+
+    loadDashboard();
+  </script>
+  <script type="module" src="../static/js/app.js"></script>
+</body>
+</html>

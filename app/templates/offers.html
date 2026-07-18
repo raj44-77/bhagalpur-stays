@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Special Offers — Bhagalpur Stays</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="../static/css/variables.css"><link rel="stylesheet" href="../static/css/global.css">
+  <link rel="stylesheet" href="../static/css/components.css"><link rel="stylesheet" href="../static/css/animations.css">
+  <link rel="stylesheet" href="../static/css/navbar.css"><link rel="stylesheet" href="../static/css/home.css">
+</head>
+<body>
+  <div id="nav-slot"></div>
+  <main>
+    <section class="hero" style="min-height: 50vh;">
+      <div class="hero-bg" style="background: linear-gradient(180deg, rgba(6,10,23,.6), rgba(6,10,23,.85)), url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=2000') center/cover;"></div>
+      <div class="hero-inner">
+        <span class="eyebrow">Limited Time</span>
+        <h1 class="a-fade-up">Exclusive offers for<br><span class="accent">Silk City</span> travellers</h1>
+        <p class="a-fade-up a-delay-1">Handpicked deals on Bhagalpur's best hotels. Book now and save big.</p>
+      </div>
+    </section>
+    <section>
+      <div class="container">
+        <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: var(--s-6);">
+          <div class="card" data-reveal>
+            <div class="card-body" style="padding: var(--s-7);">
+              <span class="badge badge-gold" style="margin-bottom: var(--s-3);">WEEKEND SPECIAL</span>
+              <h3 style="font-family:var(--font-display); font-size:var(--fs-2xl);">Weekend Getaway</h3>
+              <p class="muted" style="margin-top: var(--s-2);">25% off on 2-night stays at participating hotels. Includes complimentary breakfast.</p>
+              <div style="margin-top: var(--s-4); font-size: var(--fs-sm); color: var(--accent-strong);">Code: <strong>WEEKEND25</strong></div>
+              <a href="/hotels" class="btn btn-gold btn-block" style="margin-top: var(--s-4);">Explore Hotels</a>
+            </div>
+          </div>
+          <div class="card" data-reveal>
+            <div class="card-body" style="padding: var(--s-7);">
+              <span class="badge badge-dark" style="margin-bottom: var(--s-3);">NEW USER</span>
+              <h3 style="font-family:var(--font-display); font-size:var(--fs-2xl);">First Booking Offer</h3>
+              <p class="muted" style="margin-top: var(--s-2);">Flat ₹500 off on your first hotel booking. No minimum booking value.</p>
+              <div style="margin-top: var(--s-4); font-size: var(--fs-sm); color: var(--accent-strong);">Code: <strong>FIRST500</strong></div>
+              <a href="/signup" class="btn btn-primary btn-block" style="margin-top: var(--s-4);">Sign Up Now</a>
+            </div>
+          </div>
+          <div class="card" data-reveal>
+            <div class="card-body" style="padding: var(--s-7);">
+              <span class="badge badge-success" style="margin-bottom: var(--s-3);">FAMILY</span>
+              <h3 style="font-family:var(--font-display); font-size:var(--fs-2xl);">Family Vacation Pack</h3>
+              <p class="muted" style="margin-top: var(--s-2);">Kids stay free! Book 2 rooms and get the 3rd at 50% off at family hotels.</p>
+              <div style="margin-top: var(--s-4); font-size: var(--fs-sm); color: var(--accent-strong);">Code: <strong>FAMILY50</strong></div>
+              <a href="hotels.html?category=family" class="btn btn-outline btn-block" style="margin-top: var(--s-4);">View Family Hotels</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="footer-slot"></div>
+  <script src="../static/js/partials.js"></script>
+  <script type="module" src="../static/js/app.js"></script>
+</body>
+</html>

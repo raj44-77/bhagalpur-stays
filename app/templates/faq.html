@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FAQ — Bhagalpur Stays</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="../static/css/variables.css"><link rel="stylesheet" href="../static/css/global.css">
+  <link rel="stylesheet" href="../static/css/components.css"><link rel="stylesheet" href="../static/css/animations.css">
+  <link rel="stylesheet" href="../static/css/navbar.css">
+</head>
+<body>
+  <div id="nav-slot"></div>
+  <main>
+    <div class="container" style="padding-block: var(--s-8); max-width: 860px;">
+      <div style="text-align:center; margin-bottom: var(--s-8);">
+        <span class="eyebrow gold">Support</span>
+        <h1 style="margin-top: 8px;">Frequently asked questions</h1>
+        <p class="muted">Everything you need to know, in one place.</p>
+      </div>
+      <div id="faqs"></div>
+    </div>
+  </main>
+  <div id="footer-slot"></div>
+  <script>
+    const groups = [
+      { title: "Booking", items: [
+        ["How do I book a hotel?", "Search dates, pick a hotel, choose room and confirm. Instant email + SMS confirmation."],
+        ["Can I modify my booking?", "Yes, from My Bookings page. Modifications depend on the hotel's policy."],
+        ["Is instant confirmation guaranteed?", "For hotels marked 'Instant Confirmation' — yes. Others confirm within 30 minutes."],
+      ]},
+      { title: "Payments", items: [
+        ["What payment methods do you accept?", "UPI, credit/debit cards, net-banking, wallets, or pay-at-hotel."],
+        ["Is my payment secure?", "Yes, we use bank-grade encryption and PCI-DSS compliant gateways."],
+        ["When am I charged?", "For pay-at-hotel, at check-in. For online, right after confirmation."],
+      ]},
+      { title: "Cancellation", items: [
+        ["What's the cancellation policy?", "Most hotels offer free cancellation up to 24 hours before check-in."],
+        ["How do I get a refund?", "Refunds are processed to the original payment method within 5–7 business days."],
+      ]},
+      { title: "For hotel owners", items: [
+        ["How do I list my hotel?", "Sign up as a partner from 'Become a Hotel Partner' — takes 5 minutes."],
+        ["What's the commission?", "Simple, transparent 12% commission per booking. No signup fee."],
+      ]},
+    ];
+    document.getElementById('faqs').innerHTML = groups.map(g => `
+      <h3 style="font-family: var(--font-sans); margin: var(--s-6) 0 var(--s-3);">${g.title}</h3>
+      ${g.items.map(([q,a]) => `
+        <div class="accordion">
+          <button class="accordion-head" type="button">
+            <span>${q}</span>
+            <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M6 9l6 6 6-6"/></svg></span>
+          </button>
+          <div class="accordion-body"><div class="accordion-body-inner">${a}</div></div>
+        </div>
+      `).join("")}
+    `).join("");
+  </script>
+  <script src="../static/js/partials.js"></script>
+<script type="module" src="../static/js/app.js"></script>
+</body>
+</html>

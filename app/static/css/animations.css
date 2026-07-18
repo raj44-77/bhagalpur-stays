@@ -1,0 +1,196 @@
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes pulseGlow {
+  0%,100% { box-shadow: 0 0 0 0 rgba(212,164,55,.5); }
+  50% { box-shadow: 0 0 0 12px rgba(212,164,55,0); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes shine {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+.a-fade-up { animation: fadeInUp .8s var(--ease-out) both; }
+.a-fade { animation: fadeIn .8s var(--ease-out) both; }
+.a-scale-in { animation: fadeInScale .6s var(--ease-out) both; }
+.a-float { animation: float 4s ease-in-out infinite; }
+.a-pulse { animation: pulseGlow 2.2s ease-out infinite; }
+.a-delay-1 { animation-delay: .1s; }
+.a-delay-2 { animation-delay: .2s; }
+.a-delay-3 { animation-delay: .3s; }
+.a-delay-4 { animation-delay: .4s; }
+.a-delay-5 { animation-delay: .5s; }
+
+[data-reveal] {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity .8s var(--ease-out), transform .8s var(--ease-out);
+}
+[data-reveal].visible { opacity: 1; transform: translateY(0); }
+[data-reveal="fade"] { transform: none; }
+[data-reveal="scale"] { transform: scale(.96); }
+[data-reveal="scale"].visible { transform: scale(1); }
+
+.shine {
+  position: relative; overflow: hidden;
+}
+.shine::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%);
+  background-size: 200% 100%;
+  background-position: 200% 0;
+  transition: background-position .8s;
+  pointer-events: none;
+}
+.shine:hover::before { background-position: -100% 0; }
+
+.loading-dots { display: inline-flex; gap: 4px; }
+.loading-dots span {
+  width: 8px; height: 8px; border-radius: 50%; background: currentColor;
+  animation: dot 1.2s infinite ease-in-out;
+}
+.loading-dots span:nth-child(2) { animation-delay: .2s; }
+.loading-dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes dot {
+  0%,60%,100% { transform: scale(.4); opacity: .3; }
+  30% { transform: scale(1); opacity: 1; }
+}
+
+main.page-transition {
+  animation: fadeInUp .6s var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  [data-reveal] { opacity: 1; transform: none; }
+}
+
+/* ============================================
+   SILK-THEMED ANIMATIONS
+   ============================================ */
+
+/* Golden thread loading spinner */
+.silk-spinner {
+  width: 40px; height: 40px;
+  border: 2px solid transparent;
+  border-top: 2px solid var(--accent);
+  border-right: 2px solid var(--accent-strong);
+  border-radius: 50%;
+  animation: silk-spin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  position: relative;
+}
+.silk-spinner::before {
+  content: "";
+  position: absolute; inset: 4px;
+  border: 2px solid transparent;
+  border-bottom: 2px solid var(--accent-light);
+  border-left: 2px solid var(--accent);
+  border-radius: 50%;
+  animation: silk-spin 2s cubic-bezier(0.4, 0, 0.2, 1) infinite reverse;
+}
+@keyframes silk-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Silk thread shimmer divider */
+.silk-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  background-size: 200% 100%;
+  animation: silk-shimmer 3s ease-in-out infinite;
+  border: none;
+  margin-block: var(--s-6);
+}
+@keyframes silk-shimmer {
+  0%, 100% { background-position: -200% 0; opacity: 0.3; }
+  50% { background-position: 200% 0; opacity: 1; }
+}
+
+/* Smooth fabric-like reveal */
+[data-reveal="silk"] {
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-reveal="silk"].visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Silk weave pattern background */
+.silk-weave-bg {
+  background-image:
+    linear-gradient(45deg, var(--accent-soft) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--accent-soft) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--accent-soft) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--accent-soft) 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 0 4px, 4px -4px, -4px 0;
+  opacity: 0.15;
+}
+
+/* Gold thread sweep on hover */
+.silk-sweep {
+  position: relative; overflow: hidden;
+}
+.silk-sweep::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(212, 164, 55, 0.15), transparent);
+  transition: left 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.silk-sweep:hover::after {
+  left: 100%;
+}
+
+/* Subtle gold pulse for CTAs */
+.silk-pulse {
+  animation: silk-pulse 3s ease-in-out infinite;
+}
+@keyframes silk-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 164, 55, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(212, 164, 55, 0); }
+}
+
+/* Smooth page transitions */
+.silk-fade-in {
+  animation: silk-fade 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes silk-fade {
+  from { opacity: 0; filter: blur(4px); }
+  to { opacity: 1; filter: blur(0); }
+}
+
+/* Loading dots - golden */
+.silk-dots { display: inline-flex; gap: 6px; }
+.silk-dots span {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: silk-dot 1.4s ease-in-out infinite;
+}
+.silk-dots span:nth-child(2) { animation-delay: 0.2s; }
+.silk-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes silk-dot {
+  0%, 80%, 100% { transform: scale(0.4); opacity: 0.3; }
+  40% { transform: scale(1.2); opacity: 1; }
+}

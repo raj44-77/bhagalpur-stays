@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Wishlist — Bhagalpur Stays</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="../static/css/variables.css"><link rel="stylesheet" href="../static/css/global.css">
+  <link rel="stylesheet" href="../static/css/components.css"><link rel="stylesheet" href="../static/css/animations.css">
+  <link rel="stylesheet" href="../static/css/navbar.css"><link rel="stylesheet" href="../static/css/home.css">
+  <style>
+    .hotel-card .thumb {
+      height: 225px !important;
+      width: 100% !important;
+      aspect-ratio: auto !important;
+    }
+    .hotel-card .thumb img {
+      display: block !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-slot"></div>
+  <main>
+    <div class="container" style="padding-block: var(--s-8);">
+      <h1>My Wishlist</h1>
+      <p class="muted">Hotels you've saved for later</p>
+      <div class="hotel-grid" style="margin-top: var(--s-6);" id="wishlist-grid"></div>
+      <div id="loading" class="text-center" style="padding: var(--s-11);">
+        <div class="loading-dots"><span></span><span></span><span></span></div>
+      </div>
+      <div id="empty-wishlist" class="hidden text-center" style="padding: var(--s-11);">
+        <div style="font-size: 64px; margin-bottom: var(--s-4);">💝</div>
+        <h2>Your wishlist is empty</h2>
+        <p class="muted">Start exploring hotels and save your favorites!</p>
+        <a href="/hotels" class="btn btn-primary" style="margin-top: var(--s-4);">Browse Hotels</a>
+      </div>
+      <div id="login-prompt" class="hidden text-center" style="padding: var(--s-11);">
+        <p class="muted">Please log in to view your wishlist.</p>
+        <a href="/login" class="btn btn-primary" style="margin-top: var(--s-4);">Login</a>
+      </div>
+    </div>
+  </main>
+  <div id="footer-slot"></div>
+  <script src="../static/js/partials.js"></script>
+  <script>
+    function getToken() {
+      return localStorage.getItem('access_token');
+    }
+
+    async function loadWishlist() {
+      var token = getToken();
+      if (!token) {
+        document.getElementById('loading').classList.add('hidden');
+        document.getElementById('login-prompt').classList.remove('hidden');
+        return;
+      }
+
+      try {
+        var res = await fetch('/api/wishlist/', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (res.status === 401) {
+          document.getElementById('loading').classList.add('hidden');
+          document.getElementById('login-prompt').classList.remove('hidden');
+          return;
+        }
+        var items = await res.json();
+        document.getElementById('loading').classList.add('hidden');
+        
+        if (!items || items.length === 0) {
+          document.getElementById('empty-wishlist').classList.remove('hidden');
+          return;
+        }
+
+        renderWishlist(items);
+      } catch (e) {
+        console.error('Failed to load wishlist:', e);
+        document.getElementById('loading').classList.add('hidden');
+      }
+    }
+
+    function renderWishlist(items) {
+      var grid = document.getElementById('wishlist-grid');
+      var html = '';
+
+      for (var i = 0; i < items.length; i++) {
+        var hotelName = items[i].hotel_name || 'Hotel';
+        var hotelImg = items[i].hotel_image || 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600';
+        var slug = items[i].hotel_slug || items[i].hotel_id;
+
+        html += '<div class="hotel-card" style="opacity:1;transform:none;">' +
+          '<div class="thumb">' +
+            '<img src="' + hotelImg + '" alt="' + hotelName + '" loading="lazy">' +
+            '<button class="wishlist active" aria-label="Remove from wishlist" onclick="removeFromWishlist(event, ' + items[i].hotel_id + ')">' +
+              '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>' +
+            '</button>' +
+          '</div>' +
+          '<div class="info">' +
+            '<div class="name">' + hotelName + '</div>' +
+            '<div class="loc">📍 Bhagalpur, Bihar</div>' +
+            '<div class="foot" style="margin-top: auto; padding-top: var(--s-3); border-top: 1px dashed var(--border);">' +
+              '<a href="/hotel-details?slug=' + slug + '" class="btn btn-outline btn-sm btn-block">View Details</a>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      }
+      grid.innerHTML = html;
+    }
+
+    async function removeFromWishlist(e, hotelId) {
+      e.preventDefault();
+      e.stopPropagation();
+      var token = getToken();
+      try {
+        var res = await fetch('/api/wishlist/' + hotelId, {
+          method: 'DELETE',
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (res.ok) {
+          window.toast('Removed from wishlist', 'info');
+          location.reload();
+        }
+      } catch (err) {
+        window.toast('Failed to remove', 'error');
+      }
+    }
+
+    loadWishlist();
+  </script>
+  <script type="module" src="../static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>List Your Hotel — Bhagalpur Stays</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="../static/css/variables.css"><link rel="stylesheet" href="../static/css/global.css">
+  <link rel="stylesheet" href="../static/css/components.css"><link rel="stylesheet" href="../static/css/animations.css">
+  <link rel="stylesheet" href="../static/css/navbar.css"><link rel="stylesheet" href="../static/css/auth.css">
+</head>
+<body>
+  <div id="nav-slot"></div>
+  <main>
+    <div class="auth-wrap">
+      <aside class="auth-side">
+        <a class="brand" href="/"><span class="logo-mark">A</span> Bhagalpur Stays</a>
+        <div><h2>Grow your hotel<br>with <span style="color:var(--accent);">Bhagalpur Stays</span></h2><p style="color: rgba(255,255,255,.75); margin-top: 12px;">Join 480+ hotel partners and reach thousands of travellers searching for hotels in Bhagalpur.</p></div>
+        <div class="quote"><p>"Doubled my bookings within the first quarter. The partner dashboard is a game changer."</p><div class="who"><div class="avatar" style="background:var(--grad-gold); color:#2a1a04;">S</div><div><div style="font-weight:600;">Sanjay Kumar</div><div style="font-size:12px; opacity:.7;">Silk Palace Bhagalpur</div></div></div></div>
+      </aside>
+      <section class="auth-form-wrap">
+        <div class="auth-form">
+          <h1>Register your hotel</h1>
+          <p class="sub">Fill in the details below and our team will verify within 48 hours</p>
+          <form onsubmit="event.preventDefault(); window.toast('Registration submitted! We will contact you shortly.','success')">
+            <div class="float-field"><input class="input" type="text" placeholder=" " required><label class="float-label">Hotel name</label></div>
+            <div class="float-field"><input class="input" type="text" placeholder=" " required><label class="float-label">Owner full name</label></div>
+            <div class="float-field"><input class="input" type="email" placeholder=" " required><label class="float-label">Email address</label></div>
+            <div class="float-field"><input class="input" type="tel" placeholder=" " required><label class="float-label">Phone number</label></div>
+            <div class="float-field"><input class="input" type="text" placeholder=" " required><label class="float-label">Hotel address in Bhagalpur</label></div>
+            <div class="float-field"><input class="input" type="number" placeholder=" " required><label class="float-label">Number of rooms</label></div>
+            <button class="btn btn-gold btn-lg btn-block">Submit for Verification</button>
+          </form>
+          <div class="foot">Already a partner? <a href="/login">Sign in to dashboard</a></div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script src="../static/js/partials.js"></script>
+  <script type="module" src="../static/js/app.js"></script>
+</body>
+</html>

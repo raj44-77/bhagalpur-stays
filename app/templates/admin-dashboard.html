@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin — Bhagalpur Stays</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="../static/css/variables.css"><link rel="stylesheet" href="../static/css/global.css">
+  <link rel="stylesheet" href="../static/css/components.css"><link rel="stylesheet" href="../static/css/animations.css">
+  <link rel="stylesheet" href="../static/css/dashboard.css">
+</head>
+<body style="background: var(--bg-muted);">
+  <div class="dash">
+    <aside class="dash-side" id="side">
+      <a class="logo" href="/"><span class="logo-mark">A</span><span>Bhagalpur Stays<small>Admin Console</small></span></a>
+      <nav class="side-nav">
+        <span class="group-label">Platform</span>
+        <a href="#" class="active" onclick="showSection('dashboard')">📊 Dashboard</a>
+        <a href="#" onclick="showAuditLogs()">📋 Audit Logs</a>
+        <a href="/hotels">🏨 Hotels</a>
+        <a href="#">👥 Users</a>
+        <a href="#">📦 Bookings</a>
+        <span class="group-label">Content</span>
+        <a href="#">🎁 Offers</a>
+        <a href="#">🎟️ Coupons</a>
+        <span class="group-label">Settings</span>
+        <a href="#">⚙️ Settings</a>
+        <a href="/profile">👤 Profile</a>
+        <a href="#" onclick="doLogout()" style="color:var(--danger);">🚪 Logout</a>
+      </nav>
+      <div class="side-footer">
+        <div class="flex items-center" style="gap:10px;"><div class="avatar" style="background:var(--grad-brand); color:#fff;">A</div>
+        <div><div style="font-weight:700; color:#fff; font-size:var(--fs-sm);">Admin</div><div style="opacity:.6; font-size:11px;">Super user</div></div></div>
+      </div>
+    </aside>
+    <div class="dash-main">
+      <header class="dash-top">
+        <button class="nav-icon-btn dash-side-toggle" onclick="document.getElementById('side').classList.toggle('open')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg><input placeholder="Search platform…"></div>
+        <div class="top-actions"><button class="nav-icon-btn" data-theme-toggle><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button></div>
+      </header>
+      <div class="dash-body">
+        <!-- Dashboard Section -->
+        <div id="dashboard-section">
+          <div class="page-head"><h1>Platform overview</h1><p>Real-time system metrics</p></div>
+          <div class="kpis" id="kpi-cards">
+            <div class="kpi"><div class="head"><div><div class="label">Loading...</div><div class="val">-</div></div></div></div>
+          </div>
+          <div class="panel-grid">
+            <div class="panel">
+              <div class="panel-head"><h3>Weekly Bookings</h3></div>
+              <div class="chart-bars" id="weekly-chart"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h3>Recent Bookings</h3></div>
+              <div class="activity-list" id="recent-bookings">
+                <p class="muted">Loading...</p>
+              </div>
+            </div>
+          </div>
+          <div class="panel" style="margin-top: var(--s-5);">
+            <div class="panel-head"><h3>Pending Hotel Approvals</h3></div>
+            <div class="table-wrap" style="border:0;">
+              <table class="table"><thead><tr><th>Hotel</th><th>Owner</th><th>City</th><th>Rooms</th><th>Status</th></tr></thead>
+                <tbody id="pending-table">
+                  <tr><td colspan="5" class="text-center muted">Loading...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Audit Logs Section -->
+        <div class="panel hidden" id="audit-section" style="margin-top: var(--s-5);">
+          <div class="page-head"><h1>Audit Logs</h1><p>Track all platform activities</p></div>
+          <div class="panel">
+            <div class="panel-head">
+              <h3>Recent Activity</h3>
+              <button class="btn btn-outline btn-sm" onclick="loadAuditLogs()">🔄 Refresh</button>
+            </div>
+            <div class="table-wrap" style="border:0;">
+              <table class="table"><thead><tr><th>Time</th><th>User ID</th><th>Action</th><th>Entity</th><th>IP Address</th></tr></thead>
+                <tbody id="audit-table">
+                  <tr><td colspan="5" class="text-center muted">Loading...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function getToken() {
+      return localStorage.getItem('access_token');
+    }
+
+    function doLogout() {
+      localStorage.clear();
+      window.toast('Logged out', 'info');
+      setTimeout(function() { location.href = '/'; }, 500);
+    }
+
+    function showSection(section) {
+      document.getElementById('dashboard-section').classList.toggle('hidden', section !== 'dashboard');
+      document.getElementById('audit-section').classList.toggle('hidden', section !== 'audit');
+      // Update active nav
+      document.querySelectorAll('.side-nav a').forEach(function(a) { a.classList.remove('active'); });
+      if (section === 'dashboard') document.querySelector('.side-nav a[onclick*="dashboard"]').classList.add('active');
+      if (section === 'audit') document.querySelector('.side-nav a[onclick*="Audit"]').classList.add('active');
+    }
+
+    async function showAuditLogs() {
+      showSection('audit');
+      loadAuditLogs();
+    }
+
+    async function loadAuditLogs() {
+      var token = getToken();
+      try {
+        var res = await fetch('/api/dashboard/audit-logs?limit=50', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        var data = await res.json();
+        var logs = data.logs || [];
+        var html = '';
+
+        if (logs.length === 0) {
+          html = '<tr><td colspan="5" class="text-center muted">No audit logs found</td></tr>';
+        } else {
+          for (var i = 0; i < logs.length; i++) {
+            var log = logs[i];
+            var time = log.created_at ? log.created_at.replace('T', ' ').substring(0, 19) : '';
+            html += '<tr>' +
+              '<td style="font-size:12px;white-space:nowrap;">' + time + '</td>' +
+              '<td>' + (log.user_id || 'System') + '</td>' +
+              '<td><span class="pill">' + log.action + '</span></td>' +
+              '<td style="font-size:12px;">' + (log.entity_type || '-') + (log.entity_id ? ' #' + log.entity_id : '') + '</td>' +
+              '<td style="font-size:12px;">' + (log.ip_address || '-') + '</td>' +
+            '</tr>';
+          }
+        }
+        document.getElementById('audit-table').innerHTML = html;
+      } catch(e) {
+        document.getElementById('audit-table').innerHTML = '<tr><td colspan="5" class="text-center muted">Failed to load audit logs</td></tr>';
+      }
+    }
+
+    async function loadDashboard() {
+      var token = getToken();
+      if (!token) {
+        document.querySelector('.dash-body').innerHTML = '<div class="text-center" style="padding:100px;"><h2>Please login as admin</h2><a href="/login" class="btn btn-primary">Login</a></div>';
+        return;
+      }
+
+      try {
+        var res = await fetch('/api/dashboard/admin', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        });
+        if (!res.ok) {
+          document.querySelector('.dash-body').innerHTML = '<div class="text-center" style="padding:100px;"><h2>Admin access required</h2><a href="/" class="btn btn-primary">Go Home</a></div>';
+          return;
+        }
+        var data = await res.json();
+        renderDashboard(data);
+      } catch(e) {
+        console.error(e);
+      }
+    }
+
+    function renderDashboard(data) {
+      var kpis = data.kpis || {};
+      document.getElementById('kpi-cards').innerHTML = 
+        '<div class="kpi"><div class="head"><div><div class="label">Total Hotels</div><div class="val" style="margin-top:6px;">' + (kpis.total_hotels || 0) + '</div></div><div class="icon-badge">🏨</div></div></div>' +
+        '<div class="kpi success"><div class="head"><div><div class="label">Active Users</div><div class="val" style="margin-top:6px;">' + (kpis.active_users || 0) + '</div></div><div class="icon-badge">👥</div></div></div>' +
+        '<div class="kpi gold"><div class="head"><div><div class="label">Total Bookings</div><div class="val" style="margin-top:6px;">' + (kpis.total_bookings || 0) + '</div></div><div class="icon-badge">📦</div></div></div>' +
+        '<div class="kpi warn"><div class="head"><div><div class="label">Pending Approvals</div><div class="val" style="margin-top:6px;">' + (kpis.pending_approvals || 0) + '</div></div><div class="icon-badge">⏳</div></div></div>';
+
+      var weekly = data.weekly_bookings || [];
+      var chartHtml = '';
+      var maxVal = 10;
+      for (var j = 0; j < weekly.length; j++) {
+        if (weekly[j].value > maxVal) maxVal = weekly[j].value;
+      }
+      for (var i = 0; i < weekly.length; i++) {
+        var height = maxVal > 0 ? (weekly[i].value / maxVal * 100) : 0;
+        chartHtml += '<div class="bar" style="height:' + height + '%"><span>' + weekly[i].label + '</span></div>';
+      }
+      document.getElementById('weekly-chart').innerHTML = chartHtml;
+
+      var recent = data.recent_bookings || [];
+      var recentHtml = '';
+      for (var r = 0; r < recent.length; r++) {
+        var b = recent[r];
+        var initial = (b.hotel_name || 'H').charAt(0);
+        recentHtml += '<div class="activity">' +
+          '<div class="dot">' + initial + '</div>' +
+          '<div class="txt"><strong>' + (b.hotel_name || 'Hotel') + '</strong><small>Ref: ' + b.booking_ref + '</small></div>' +
+          '<div class="amt">₹' + parseInt(b.total_amount).toLocaleString('en-IN') + '</div>' +
+        '</div>';
+      }
+      document.getElementById('recent-bookings').innerHTML = recentHtml || '<p class="muted">No recent bookings</p>';
+      document.getElementById('pending-table').innerHTML = '<tr><td colspan="5" class="text-center muted">No pending approvals</td></tr>';
+    }
+
+    loadDashboard();
+  </script>
+  <script type="module" src="../static/js/app.js"></script>
+</body>
+</html>
