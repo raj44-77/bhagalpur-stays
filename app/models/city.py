@@ -1,4 +1,4 @@
-﻿from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP
+﻿from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.database import Base
