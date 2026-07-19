@@ -24,3 +24,8 @@ Thumbs.db
 # Secrets
 tidb-ca.pem
 *.pem
+check_hash.py
+seed_railway.py
+seed_rooms.py
+test_railway_login.py
+mark_checkedout.py
