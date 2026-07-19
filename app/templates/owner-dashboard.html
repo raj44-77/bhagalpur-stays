@@ -210,6 +210,17 @@
       }
     }
 
+    // Close sidebar on outside tap
+document.addEventListener('click', function(e) {
+  var side = document.getElementById('side');
+  var toggle = document.querySelector('.dash-side-toggle');
+  if (side && side.classList.contains('open') && toggle) {
+    if (!side.contains(e.target) && e.target !== toggle && !toggle.contains(e.target)) {
+      side.classList.remove('open');
+    }
+  }
+});
+
     loadDashboard();
   </script>
   <script type="module" src="../static/js/app.js"></script>
