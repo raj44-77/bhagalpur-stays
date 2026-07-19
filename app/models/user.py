@@ -18,6 +18,7 @@ class User(Base):
     bookings = relationship("Booking", back_populates="user")
     reviews = relationship("Review", back_populates="user")
     wishlists = relationship("Wishlist", back_populates="user")
+    notifications = relationship("Notification", back_populates="user")
 class RefreshToken(Base):
     __tablename__ = "refresh_tokens"
     id = Column(Integer, primary_key=True)
