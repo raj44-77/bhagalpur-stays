@@ -7,84 +7,86 @@
   <link rel="stylesheet" href="../static/css/variables.css"><link rel="stylesheet" href="../static/css/global.css">
   <link rel="stylesheet" href="../static/css/components.css"><link rel="stylesheet" href="../static/css/animations.css">
   <link rel="stylesheet" href="../static/css/navbar.css"><link rel="stylesheet" href="../static/css/home.css">
+  <style>
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-8); align-items: center; }
+    .about-image { width: 100%; border-radius: var(--r-xl); aspect-ratio: 4/3; object-fit: cover; }
+    .founder-quote { font-size: var(--fs-lg); line-height: 1.8; color: var(--text-soft); font-style: italic; border-left: 4px solid var(--accent); padding-left: var(--s-5); margin: var(--s-5) 0; }
+    .stat-item { text-align: center; padding: var(--s-4); }
+    .stat-num { font-family: var(--font-display); font-size: clamp(32px, 5vw, 48px); font-weight: 700; color: var(--brand); }
+    .stat-label { color: var(--text-muted); font-size: var(--fs-sm); margin-top: 4px; }
+
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: var(--s-6); }
+      .about-image { aspect-ratio: 16/9; max-height: 300px; }
+      .founder-quote { font-size: var(--fs-md); padding-left: var(--s-4); margin: var(--s-4) 0; }
+      h2 { font-size: var(--fs-2xl) !important; }
+    }
+  </style>
 </head>
 <body>
   <div id="nav-slot"></div>
   <main>
-    <section class="hero" style="min-height: 60vh;">
+    <!-- Hero -->
+    <section class="hero" style="min-height: 40vh;">
       <div class="hero-bg" style="background: linear-gradient(180deg, rgba(6,10,23,.6), rgba(6,10,23,.85)), url('../static/images/attractions/bhagalpur-about.jpg') center/cover;"></div>
       <div class="hero-inner">
         <span class="eyebrow">Our Story</span>
         <h1 class="a-fade-up">Built for Bhagalpur.<br><span class="accent">By Bhagalpur.</span></h1>
-        <p class="a-fade-up a-delay-1">We started Bhagalpur Stays with one simple mission: make it effortless for anyone to discover and book the best hotels in Silk City.</p>
+        <p class="a-fade-up a-delay-1" style="max-width:500px;">The first and only hotel booking platform made exclusively for Silk City.</p>
       </div>
     </section>
 
+    <!-- Founder Section -->
     <section>
       <div class="container">
-        <div class="grid" style="grid-template-columns: 1fr 1fr; gap: var(--s-8); align-items: center;">
-          <div><img src="../static/images/attractions/bhagalpur-about.jpg" style="border-radius: var(--r-xl);" alt="Bhagalpur"></div>
+        <div class="about-grid">
+          <img src="../static/images/attractions/bhagalpur-about.jpg" alt="Bhagalpur Silk City" class="about-image">
           <div>
             <span class="eyebrow gold">Founder's Note</span>
-            <h2 style="margin-top: 6px;">From Silk City, with love</h2>
-            <p class="muted" style="margin-top: var(--s-4); line-height: 1.8;">
-              Bhagalpur isn't just a city — it's an emotion. From the ancient ruins of Vikramshila to the serene Ganga ghats, 
-              from the world-famous Tussar silk to the aroma of Litti Chokha — this city has always welcomed travelers with open arms.
-            </p>
-            <p class="muted" style="margin-top: var(--s-3); line-height: 1.8;">
-              But finding a reliable hotel here was always a challenge. That's why I built Bhagalpur Stays — a platform that connects 
-              travelers to verified, trusted hotels across Silk City. No more guessing. No more uncertainty. Just honest stays, 
-              fair prices, and local support that speaks your language.
-            </p>
-            <p class="muted" style="margin-top: var(--s-3); line-height: 1.8;">
-              This is more than a business. It's my commitment to my city — to put Bhagalpur on India's travel map, 
-              one happy guest at a time.
+            <h2 style="margin-top:6px;">From Silk City,<br>with love</h2>
+            <div class="founder-quote">
+              "Bhagalpur isn't just a city — it's home. From Vikramshila's ruins to Barari's ghats, every corner has a story. I built Bhagalpur Stays so travelers can experience those stories without worrying about where to stay."
+            </div>
+            <p class="muted" style="line-height:1.7;">
+              For years, finding a reliable hotel in Bhagalpur meant asking around, making phone calls, and hoping for the best. 
+              We changed that. Every hotel on our platform is verified, every price is transparent, and our support team speaks 
+              your language — because we're locals too.
             </p>
             <div style="margin-top: var(--s-5);">
               <strong style="font-family: var(--font-display); font-size: var(--fs-xl);">— Kumar Raj</strong>
-              <p class="muted" style="font-size: var(--fs-sm);">Founder, CEO & Developer · Bhagalpur Stays</p>
+              <p class="muted" style="font-size: var(--fs-sm);">Founder, CEO & Developer</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- Stats -->
     <section class="tinted">
       <div class="container">
-        <div class="section-head"><span class="eyebrow">Our Mission</span><h2>Every hotel. One trusted platform.</h2></div>
-        <div class="grid" style="grid-template-columns: 1fr 1fr; gap: var(--s-8); align-items: center;">
-          <div>
-            <p class="muted" style="line-height: 1.8;">
-              From heritage riverside palaces to cozy homestays, from luxury suites to budget rooms — we're building 
-              the platform that brings every Bhagalpur hotel under one roof. Every listing is verified. Every price is transparent. 
-              Every booking is backed by our 24×7 local support team.
-            </p>
-            <div class="grid" style="grid-template-columns: 1fr 1fr; gap: var(--s-4); margin-top: var(--s-6);">
-              <div><div style="font-family: var(--font-display); font-size: 40px; font-weight: 700; color: var(--brand);">8+</div><div class="muted">Verified Hotels</div></div>
-              <div><div style="font-family: var(--font-display); font-size: 40px; font-weight: 700; color: var(--brand);">24×7</div><div class="muted">Local Support</div></div>
-              <div><div style="font-family: var(--font-display); font-size: 40px; font-weight: 700; color: var(--brand);">100%</div><div class="muted">Verified Listings</div></div>
-              <div><div style="font-family: var(--font-display); font-size: 40px; font-weight: 700; color: var(--brand);">₹0</div><div class="muted">Booking Fees</div></div>
-            </div>
-          </div>
-          <div style="text-align: center;">
-            <div style="font-size: 120px;">🏨</div>
-            <h3 style="font-family: var(--font-display);">Silk City's Own<br>Booking Platform</h3>
-          </div>
+        <div class="section-head"><span class="eyebrow">By the numbers</span><h2>Growing with Bhagalpur</h2></div>
+        <div class="grid" style="grid-template-columns: repeat(4, 1fr); gap: var(--s-4);">
+          <div class="stat-item"><div class="stat-num">8+</div><div class="stat-label">Verified Hotels</div></div>
+          <div class="stat-item"><div class="stat-num">24×7</div><div class="stat-label">Local Support</div></div>
+          <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Verified Listings</div></div>
+          <div class="stat-item"><div class="stat-num">₹0</div><div class="stat-label">Booking Fees</div></div>
         </div>
       </div>
     </section>
 
+    <!-- Mission -->
     <section>
-      <div class="container text-center" style="max-width: 600px;">
-        <span class="eyebrow gold">Get in touch</span>
-        <h2 style="margin-top: 8px;">Let's grow together</h2>
-        <p class="muted" style="margin-top: var(--s-4);">
-          Whether you're a hotel owner wanting to list your property, or a traveler with feedback — 
-          I'd love to hear from you.
+      <div class="container text-center" style="max-width: 650px;">
+        <span class="eyebrow gold">Our Promise</span>
+        <h2 style="margin-top:8px;">Every stay, verified. Every guest, valued.</h2>
+        <p class="muted" style="margin-top:var(--s-4); line-height:1.8;">
+          We personally verify every hotel before it goes live. From cleanliness to safety, 
+          from pricing to service — if it doesn't meet our standards, it doesn't make the cut. 
+          That's the Silk City promise.
         </p>
-        <div style="margin-top: var(--s-5); display: flex; gap: var(--s-3); justify-content: center; flex-wrap: wrap;">
-          <a href="/contact" class="btn btn-primary">Contact Us</a>
-          <a href="/hotel-register" class="btn btn-outline">List Your Hotel</a>
+        <div style="margin-top: var(--s-6); display:flex; gap:var(--s-3); justify-content:center; flex-wrap:wrap;">
+          <a href="/hotels" class="btn btn-gold btn-lg">Browse Hotels</a>
+          <a href="/contact" class="btn btn-outline btn-lg">Get in Touch</a>
         </div>
       </div>
     </section>
