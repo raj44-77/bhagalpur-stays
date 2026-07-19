@@ -1,5 +1,4 @@
 ﻿from app.models import Payment, Booking
-from datetime import datetime
 def create_payment(db, booking_id, user_id, amount, method="pay_at_hotel"):
     payment = Payment(booking_id=booking_id, amount=amount, payment_method=method, status="success" if method == "pay_at_hotel" else "pending")
     db.add(payment)

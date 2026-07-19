@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from app.database import engine, Base
-from app.routers import auth, hotels, rooms, bookings, payments, reviews, wishlist, dashboard, notifications, coupons, users
+from app.routers import auth, hotels, rooms, bookings, payments, reviews, wishlist, dashboard, coupons, users
 from app.middleware.rate_limit import rate_limit_middleware
 from app.middleware.security_headers import security_headers_middleware
 
@@ -47,7 +47,7 @@ app.include_router(payments.router)
 app.include_router(reviews.router)
 app.include_router(wishlist.router)
 app.include_router(dashboard.router)
-app.include_router(notifications.router)
+
 app.include_router(coupons.router)
 app.include_router(users.router)
 

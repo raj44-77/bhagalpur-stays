@@ -1,5 +1,6 @@
-﻿from app.models import Wishlist, Hotel
+﻿from app.models import Wishlist, Hotel, HotelImage
 def add_to_wishlist(db, user_id, hotel_id):
+    from app.models import Wishlist
     existing = db.query(Wishlist).filter(Wishlist.user_id == user_id, Wishlist.hotel_id == hotel_id).first()
     if existing: return None, "Already in wishlist"
     w = Wishlist(user_id=user_id, hotel_id=hotel_id)
@@ -12,4 +13,9 @@ def remove_from_wishlist(db, user_id, hotel_id):
     return True
 def get_user_wishlist(db, user_id):
     items = db.query(Wishlist).filter(Wishlist.user_id == user_id).all()
-    return [{"id": i.id, "hotel_id": i.hotel_id, "hotel_name": i.hotel.name if i.hotel else None, "hotel_image": i.hotel.images[0].image_url if i.hotel and i.hotel.images else None, "hotel_slug": i.hotel.slug if i.hotel else None} for i in items]
+    result = []
+    for i in items:
+        hotel = db.query(Hotel).filter(Hotel.id == i.hotel_id).first()
+        img = db.query(HotelImage).filter(HotelImage.hotel_id == i.hotel_id, HotelImage.is_primary == True).first()
+        result.append({"id": i.id, "hotel_id": i.hotel_id, "hotel_name": hotel.name if hotel else None, "hotel_slug": hotel.slug if hotel else None, "hotel_image": img.image_url if img else None})
+    return result
