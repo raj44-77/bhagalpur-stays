@@ -9,7 +9,7 @@ from app.schemas.auth import (
 )
 from app.schemas.users import UserResponse
 from app.services import auth_service
-from app.services.audit_service import log_action
+
 
 router = APIRouter(prefix="/api/auth", tags=["Auth"])
 
