@@ -1,4 +1,4 @@
-﻿from app.models import Hotel, HotelImage, RoomType, Review, City
+﻿from app.models import Hotel, HotelImage, RoomType, City
 def get_hotels(db, skip=0, limit=20, **kwargs):
     hotels = db.query(Hotel).filter(Hotel.status == 'approved').offset(skip).limit(limit).all()
     result = []
