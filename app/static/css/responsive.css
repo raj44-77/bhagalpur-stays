@@ -1,4 +1,4 @@
-﻿/* ============================================
+/* ============================================
    GLOBAL MOBILE FIXES
    ============================================ */
 @media (max-width: 768px) {
@@ -28,7 +28,7 @@
 @media (max-width: 480px) {
   #chatbot-widget { bottom: 12px !important; right: 12px !important; }
   .chatbot-toggle { width: 48px !important; height: 48px !important; font-size: 20px !important; }
-  .chatbot-box { width: calc(100vw - 24px) !important; max-width: 100% !important; height: 60vh !important; bottom: 60px !important; right: 0 !important; }
+  .chatbot-box { width: calc(100vw - 24px) !important; max-width: 100% !important; height: 70vh !important; max-height: 500px !important; bottom: 60px !important; right: 0 !important; }
   .chatbot-messages { max-height: calc(60vh - 130px) !important; }
   .chatbot-suggestions button { font-size: 10px !important; padding: 4px 8px !important; }
 }
