@@ -1,4 +1,4 @@
-﻿from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, ForeignKey, Text, DECIMAL, Date
+from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, ForeignKey, Text, DECIMAL, Date
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.database import Base
@@ -91,6 +91,19 @@ class Coupon(Base):
     min_booking_amount = Column(DECIMAL(10,2), default=0)
     max_discount = Column(DECIMAL(10,2))
     is_active = Column(Boolean, default=True)
+class RefreshToken(Base):
+    __tablename__ = "refresh_tokens"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer)
+    token = Column(String(500))
+    expires_at = Column(TIMESTAMP)
+class PasswordReset(Base):
+    __tablename__ = "password_resets"
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer)
+    token = Column(String(500))
+    expires_at = Column(TIMESTAMP)
+    used = Column(Boolean, default=False)
 class Payment(Base):
     __tablename__ = "payments"
     id = Column(Integer, primary_key=True)
