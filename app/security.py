@@ -1,4 +1,4 @@
-﻿"""JWT authentication and password hashing"""
+"""JWT authentication and password hashing"""
 import os
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
@@ -17,7 +17,7 @@ def hash_password(password: str) -> str:
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     try:
         return pwd_context.verify(plain_password, hashed_password)
-    except:
+    except Exception:
         # Fallback for SHA256 hashes (from seed script)
         return hashlib.sha256(plain_password.encode()).hexdigest() == hashed_password
 def create_access_token(data: dict) -> str:
