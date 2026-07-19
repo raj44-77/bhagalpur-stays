@@ -1,0 +1,26 @@
+﻿# Environment
+.env
+.env.local
+.env.production
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+venv/
+.venv/
+# Database
+database/backups/
+# Logs
+app/logs/
+# Uploads
+app/static/uploads/*
+!app/static/uploads/.gitkeep
+# IDE
+.vscode/
+.idea/
+# OS
+.DS_Store
+Thumbs.db
+# Secrets
+tidb-ca.pem
+*.pem
