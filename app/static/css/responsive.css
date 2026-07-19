@@ -1,0 +1,88 @@
+﻿/* ============================================
+   GLOBAL MOBILE FIXES
+   ============================================ */
+@media (max-width: 768px) {
+  h1 { font-size: clamp(24px, 7vw, 36px) !important; }
+  h2 { font-size: clamp(20px, 5vw, 28px) !important; }
+  h3 { font-size: clamp(18px, 4vw, 22px) !important; }
+  .container { padding-inline: 16px !important; }
+  section { padding-block: 40px !important; }
+  .section-head { margin-bottom: var(--s-6) !important; }
+  .section-head p { font-size: var(--fs-sm) !important; }
+  .hero { min-height: 50vh !important; }
+  .hero h1 { font-size: clamp(28px, 8vw, 42px) !important; }
+  .hero p { font-size: var(--fs-sm) !important; max-width: 100% !important; }
+  .hero-stats { gap: var(--s-4) !important; }
+  .hero-stats .num { font-size: var(--fs-2xl) !important; }
+}
+@media (max-width: 480px) {
+  .hero { min-height: 40vh !important; }
+  .hero-inner { padding-block: var(--s-8) var(--s-6) !important; }
+  .hero-stats { flex-direction: column !important; gap: var(--s-3) !important; align-items: flex-start !important; }
+  .hero-stats .stat { display: flex; align-items: center; gap: var(--s-3); }
+  .hero-stats .num { font-size: var(--fs-xl) !important; }
+  .hero-search-wrap { margin-top: -30px !important; }
+  .btn-lg { padding: 12px 20px !important; font-size: var(--fs-sm) !important; }
+}
+/* Chatbot mobile fix */
+@media (max-width: 480px) {
+  #chatbot-widget { bottom: 12px !important; right: 12px !important; }
+  .chatbot-toggle { width: 48px !important; height: 48px !important; font-size: 20px !important; }
+  .chatbot-box { width: calc(100vw - 24px) !important; max-width: 100% !important; height: 60vh !important; bottom: 60px !important; right: 0 !important; }
+  .chatbot-messages { max-height: calc(60vh - 130px) !important; }
+  .chatbot-suggestions button { font-size: 10px !important; padding: 4px 8px !important; }
+}
+/* Tables mobile */
+@media (max-width: 768px) {
+  .table-wrap { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+  .table { font-size: var(--fs-xs) !important; }
+  .table th, .table td { padding: 10px 8px !important; }
+}
+/* Forms mobile */
+@media (max-width: 480px) {
+  .grid[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+  .details-layout { grid-template-columns: 1fr !important; }
+  .booking-card { position: static !important; }
+}
+/* Newsletter mobile */
+@media (max-width: 600px) {
+  .newsletter-block { grid-template-columns: 1fr !important; padding: var(--s-5) !important; text-align: center !important; }
+  .newsletter { flex-direction: column !important; }
+  .newsletter input, .newsletter .btn { width: 100% !important; }
+}
+/* Footer mobile */
+@media (max-width: 600px) {
+  .footer-grid { grid-template-columns: 1fr 1fr !important; gap: var(--s-5) !important; }
+  .footer-brand { grid-column: span 2 !important; }
+}
+@media (max-width: 400px) {
+  .footer-grid { grid-template-columns: 1fr !important; }
+  .footer-brand { grid-column: span 1 !important; }
+}
+/* Auth pages mobile */
+@media (max-width: 900px) {
+  .auth-wrap { grid-template-columns: 1fr !important; }
+  .auth-side { min-height: 180px !important; padding: var(--s-5) !important; }
+  .auth-form-wrap { padding: var(--s-5) !important; }
+}
+/* Hotel listing mobile */
+@media (max-width: 700px) {
+  .hotel-row { grid-template-columns: 1fr !important; }
+  .hotel-row .thumb { width: 100% !important; height: 200px !important; }
+  .hotel-row .side { flex-direction: row !important; align-items: center !important; justify-content: space-between !important; }
+  .hotel-row .actions { flex-direction: row !important; width: auto !important; }
+}
+/* Dashboard mobile */
+@media (max-width: 1000px) {
+  .dash { grid-template-columns: 1fr !important; }
+  .kpis { grid-template-columns: 1fr 1fr !important; }
+  .panel-grid { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 500px) {
+  .kpis { grid-template-columns: 1fr !important; }
+}
+/* Navbar mobile */
+@media (max-width: 1080px) {
+  .nav-links { display: none !important; }
+  .hamburger { display: grid !important; }
+}
