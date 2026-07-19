@@ -46,6 +46,9 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
             <span id="wishlist-text">Save</span>
           </button>
+          <button id="review-btn" onclick="showReviewForm()" style="display:flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--border-strong);border-radius:var(--r-pill);background:var(--surface);cursor:pointer;font-size:var(--fs-sm);font-weight:600;white-space:nowrap;">
+            ⭐ Write Review
+          </button>
           <div class="quick-rate">
             <span class="rating-chip" id="h-rate">★ 4.8</span>
             <div class="rating-text">
@@ -59,10 +62,7 @@
         <div class="details-main">
           <section>
             <div class="sec-title"><h2>About this hotel</h2></div>
-            <p class="muted" style="line-height:1.8;" id="h-desc">
-              Set on the banks of the Ganges, this landmark property blends royal Bhagalpur heritage with modern
-              comforts. Enjoy silk-inspired interiors, riverfront dining and personalised service.
-            </p>
+            <p class="muted" style="line-height:1.8;" id="h-desc">Set on the banks of the Ganges, this landmark property blends royal Bhagalpur heritage with modern comforts. Enjoy silk-inspired interiors, riverfront dining and personalised service.</p>
           </section>
           <section>
             <div class="sec-title"><h2>Amenities</h2></div>
@@ -74,11 +74,7 @@
           </section>
           <section>
             <div class="sec-title"><h2>Location</h2></div>
-            <div class="map-box">
-              <div class="pin">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><circle cx="12" cy="10" r="3"/></svg>
-              </div>
-            </div>
+            <div class="map-box"><div class="pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><circle cx="12" cy="10" r="3"/></svg></div></div>
             <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); margin-top: var(--s-4);">
               <div class="chip"><span>🚉</span> 0.8 km · Bhagalpur Junction</div>
               <div class="chip"><span>✈️</span> 35 km · Gaya Airport</div>
@@ -89,40 +85,23 @@
           <section>
             <div class="sec-title"><h2>Policies</h2></div>
             <div class="grid" style="grid-template-columns: 1fr 1fr;">
-              <div class="card"><div class="card-body">
-                <h4 style="font-family: var(--font-sans); font-size: var(--fs-md); margin-bottom: 8px;">Check-in / Check-out</h4>
-                <p class="muted" style="font-size: var(--fs-sm);">Check-in: 2:00 PM · Check-out: 11:00 AM</p>
-              </div></div>
-              <div class="card"><div class="card-body">
-                <h4 style="font-family: var(--font-sans); font-size: var(--fs-md); margin-bottom: 8px;">Cancellation</h4>
-                <p class="muted" style="font-size: var(--fs-sm);">Free cancellation until 24 hours before check-in.</p>
-              </div></div>
+              <div class="card"><div class="card-body"><h4 style="font-family: var(--font-sans); font-size: var(--fs-md); margin-bottom: 8px;">Check-in / Check-out</h4><p class="muted" style="font-size: var(--fs-sm);">Check-in: 2:00 PM · Check-out: 11:00 AM</p></div></div>
+              <div class="card"><div class="card-body"><h4 style="font-family: var(--font-sans); font-size: var(--fs-md); margin-bottom: 8px;">Cancellation</h4><p class="muted" style="font-size: var(--fs-sm);">Free cancellation until 24 hours before check-in.</p></div></div>
             </div>
           </section>
           <section>
-            <div class="sec-title"><h2>Guest Reviews</h2></div>
-            <div id="reviews-section">
-              <div class="text-center" style="padding:var(--s-4);">
-                <div class="loading-dots"><span></span><span></span><span></span></div>
-              </div>
-            </div>
+            <div class="sec-title"><h2>Guest Reviews</h2><button class="btn btn-outline btn-sm" onclick="showReviewForm()">⭐ Write Review</button></div>
+            <div id="reviews-section"><div class="text-center" style="padding:var(--s-4);"><div class="loading-dots"><span></span><span></span><span></span></div></div></div>
           </section>
         </div>
-        <!-- Booking sidebar -->
         <aside>
           <div class="booking-card">
             <div class="badge badge-gold" style="margin-bottom: 10px;">Best Price Guarantee</div>
-            <div class="price-head">
-              <span class="strike" id="bk-strike">₹6,499</span>
-              <span class="amount" id="bk-amount">₹4,899</span>
-              <span class="per">/ night</span>
-            </div>
+            <div class="price-head"><span class="strike" id="bk-strike">₹6,499</span><span class="amount" id="bk-amount">₹4,899</span><span class="per">/ night</span></div>
             <div class="picker-grid">
               <div class="picker"><label>Check-in</label><input type="date" id="checkin"></div>
               <div class="picker"><label>Check-out</label><input type="date" id="checkout"></div>
-              <div class="picker" style="grid-column: span 2;"><label>Guests</label>
-                <select><option>2 Adults · 1 Room</option><option>4 Adults · 2 Rooms</option></select>
-              </div>
+              <div class="picker" style="grid-column: span 2;"><label>Guests</label><select><option>2 Adults · 1 Room</option><option>4 Adults · 2 Rooms</option></select></div>
             </div>
             <div class="summary-row"><span id="bk-nights">2 nights</span><span id="bk-subtotal">₹9,798</span></div>
             <div class="summary-row"><span>Taxes &amp; fees</span><span id="bk-tax">₹1,176</span></div>
@@ -133,163 +112,155 @@
         </aside>
       </div>
     </div>
+
+    <!-- Review Modal -->
+    <div id="review-modal">
+      <div>
+        <h3 style="margin-bottom:var(--s-2);">Write a Review</h3>
+        <p class="muted" id="review-hotel-name" style="margin-bottom:var(--s-4);">Hotel</p>
+        <form onsubmit="submitHotelReview(event)" style="display:flex;flex-direction:column;gap:var(--s-4);">
+          <div>
+            <label class="form-label">Rating</label>
+            <div style="display:flex;gap:4px;font-size:28px;margin-top:4px;" id="star-rating">
+              <span onclick="setRating(1)" style="cursor:pointer;" id="star1">☆</span>
+              <span onclick="setRating(2)" style="cursor:pointer;" id="star2">☆</span>
+              <span onclick="setRating(3)" style="cursor:pointer;" id="star3">☆</span>
+              <span onclick="setRating(4)" style="cursor:pointer;" id="star4">☆</span>
+              <span onclick="setRating(5)" style="cursor:pointer;" id="star5">☆</span>
+            </div>
+            <input type="hidden" id="review-rating" value="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Your review</label>
+            <textarea class="textarea" id="review-comment" placeholder="Share your experience..." style="min-height:100px;"></textarea>
+          </div>
+          <div style="display:flex;gap:var(--s-3);justify-content:flex-end;">
+            <button type="button" class="btn btn-outline" onclick="closeReviewForm()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </main>
   <div id="footer-slot"></div>
 
   <script>
-    function getToken() {
-      return localStorage.getItem('access_token');
+    var currentHotel = null;
+    var selectedRating = 0;
+
+    function getToken() { return localStorage.getItem('access_token'); }
+
+    function setRating(r) {
+      selectedRating = r;
+      document.getElementById('review-rating').value = r;
+      for (var i = 1; i <= 5; i++) {
+        document.getElementById('star' + i).textContent = i <= r ? '★' : '☆';
+        document.getElementById('star' + i).style.color = i <= r ? 'var(--accent)' : '';
+      }
+    }
+
+    function showReviewForm() {
+      if (!getToken()) { window.toast('Please login to review', 'error'); setTimeout(function(){ location.href='/login'; }, 1000); return; }
+      document.getElementById('review-hotel-name').textContent = currentHotel ? currentHotel.name : 'Hotel';
+      document.getElementById('review-modal').style.display = 'flex';
+      selectedRating = 0; document.getElementById('review-rating').value = 0;
+      for (var i = 1; i <= 5; i++) { document.getElementById('star' + i).textContent = '☆'; document.getElementById('star' + i).style.color = ''; }
+      document.getElementById('review-comment').value = '';
+    }
+
+    function closeReviewForm() { document.getElementById('review-modal').style.display = 'none'; }
+    document.getElementById('review-modal').addEventListener('click', function(e) { if (e.target === this) closeReviewForm(); });
+
+    async function submitHotelReview(e) {
+      e.preventDefault();
+      var rating = parseInt(document.getElementById('review-rating').value);
+      if (!rating || rating === 0) { window.toast('Please select a rating', 'error'); return; }
+      var comment = document.getElementById('review-comment').value;
+      var token = getToken();
+      try {
+        var res = await fetch('/api/reviews/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify({ hotel_id: currentHotel.id, rating: rating, comment: comment || null })
+        });
+        var data = await res.json();
+        if (res.ok) {
+          window.toast('Review submitted! Thank you', 'success');
+          closeReviewForm();
+          loadReviews(currentHotel.id);
+        } else { window.toast(data.detail || 'Failed to submit review', 'error'); }
+      } catch(err) { window.toast('Network error', 'error'); }
     }
 
     async function fetchHotelDetailsBySlug(slug) {
-      try {
-        var res = await fetch('/api/hotels/' + slug);
-        if (!res.ok) throw new Error('Hotel not found');
-        return await res.json();
-      } catch (e) {
-        console.error('Failed to fetch hotel:', e);
-        return null;
-      }
+      try { var res = await fetch('/api/hotels/' + slug); if (!res.ok) throw new Error('Not found'); return await res.json(); }
+      catch(e) { return null; }
     }
 
     (async function() {
       var params = new URLSearchParams(location.search);
-      var hotelSlug = params.get('slug') || params.get('id') || 'ganga-vilas-palace';
-      var hotel = await fetchHotelDetailsBySlug(hotelSlug);
-
-      if (!hotel) {
-        document.querySelector('.container').innerHTML = '<div class="text-center" style="padding:100px;"><h1>Hotel not found</h1><a href="/hotels">Browse hotels</a></div>';
-        return;
-      }
+      var hotel = await fetchHotelDetailsBySlug(params.get('slug') || params.get('id') || 'ganga-vilas-palace');
+      if (!hotel) { document.querySelector('.container').innerHTML = '<div class="text-center" style="padding:100px;"><h1>Hotel not found</h1><a href="/hotels">Browse hotels</a></div>'; return; }
+      currentHotel = hotel;
 
       document.title = hotel.name + ' — Bhagalpur Stays';
       document.getElementById('crumb-name').textContent = hotel.name;
       document.getElementById('h-name').textContent = hotel.name;
       document.getElementById('h-tag').textContent = hotel.star_rating + ' Star';
-      document.getElementById('h-loc').innerHTML += ' ' + (hotel.area_name || 'Bhagalpur') + ', Bihar';
+      document.getElementById('h-loc').innerHTML += ' ' + (hotel.city_name || 'Bhagalpur') + ', Bihar';
       document.getElementById('h-rate').innerHTML = '★ ' + (hotel.avg_rating || 'New');
       document.getElementById('h-reviews').textContent = (hotel.review_count || 0) + ' reviews';
-
       var price = hotel.min_price || 1999;
       document.getElementById('bk-strike').textContent = '₹' + Math.round(price * 1.3).toLocaleString('en-IN');
       document.getElementById('bk-amount').textContent = '₹' + Math.round(price).toLocaleString('en-IN');
 
-      // Gallery
-      var images = (hotel.images && hotel.images.length > 0) ? hotel.images.map(function(i) { return i.image_url; }) : ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1400'];
+      var images = (hotel.images && hotel.images.length > 0) ? hotel.images.map(function(i){return i.image_url;}) : ['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1400'];
       var displayImages = images.concat(images).slice(0, 5);
       var galleryHtml = '';
-      for (var i = 0; i < displayImages.length; i++) {
-        galleryHtml += '<div class="g"><img src="' + displayImages[i] + '" alt="' + hotel.name + ' photo ' + (i+1) + '" loading="lazy">';
-        if (i === 4) galleryHtml += '<button class="more-btn">View all photos</button>';
-        galleryHtml += '</div>';
-      }
+      for (var i = 0; i < displayImages.length; i++) { galleryHtml += '<div class="g"><img src="'+displayImages[i]+'" alt="'+hotel.name+' photo '+(i+1)+'" loading="lazy">' + (i===4?'<button class="more-btn">View all photos</button>':'') + '</div>'; }
       document.getElementById('gallery').innerHTML = galleryHtml;
 
-      // Amenities
       var amenGrid = document.getElementById('amen-grid');
       if (hotel.amenities && hotel.amenities.length > 0) {
-        var amenHtml = '';
-        for (var a = 0; a < hotel.amenities.length; a++) {
-          amenHtml += '<div class="amen-item">✓ ' + hotel.amenities[a].name + '</div>';
-        }
+        var amenHtml = ''; for (var a=0;a<hotel.amenities.length;a++) amenHtml += '<div class="amen-item">✓ '+hotel.amenities[a].name+'</div>';
         amenGrid.innerHTML = amenHtml;
-      } else {
-        amenGrid.innerHTML = '<div class="amen-item">✓ Free WiFi</div><div class="amen-item">✓ AC</div><div class="amen-item">✓ Room Service</div>';
-      }
+      } else amenGrid.innerHTML = '<div class="amen-item">✓ Free WiFi</div><div class="amen-item">✓ AC</div><div class="amen-item">✓ Room Service</div>';
 
-      // Rooms
       var roomsList = document.getElementById('rooms-list');
       if (hotel.room_types && hotel.room_types.length > 0) {
         var roomHtml = '';
-        for (var r = 0; r < hotel.room_types.length; r++) {
+        for (var r=0;r<hotel.room_types.length;r++) {
           var room = hotel.room_types[r];
           var roomImg = (hotel.images && hotel.images.length > 0) ? hotel.images[0].image_url : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400';
-          roomHtml += '<div class="room-card">' +
-            '<div class="thumb"><img src="' + roomImg + '" alt="' + room.name + '" loading="lazy"></div>' +
-            '<div class="body">' +
-              '<h4>' + room.name + '</h4>' +
-              '<div class="facts"><span>🛏️ ' + (room.bed_type || 'Standard') + '</span><span>👥 Up to ' + room.max_guests + ' guests</span></div>' +
-              '<ul><li>Breakfast included</li><li>Free cancellation</li><li>Free WiFi</li></ul>' +
-            '</div>' +
-            '<div class="price-col">' +
-              '<div class="price">' +
-                '<div class="strike">₹' + Math.round(room.base_price * 1.3).toLocaleString('en-IN') + '</div>' +
-                '<div class="amount">₹' + Math.round(room.base_price).toLocaleString('en-IN') + '</div>' +
-                '<div class="per">per night</div>' +
-              '</div>' +
-              '<a href="/booking?hotel=' + hotel.slug + '" class="btn btn-primary btn-block">Book Room</a>' +
-            '</div>' +
-          '</div>';
+          roomHtml += '<div class="room-card"><div class="thumb"><img src="'+roomImg+'" alt="'+room.name+'" loading="lazy"></div><div class="body"><h4>'+room.name+'</h4><div class="facts"><span>🛏️ '+(room.bed_type||'Standard')+'</span><span>👥 Up to '+room.max_guests+' guests</span></div><ul><li>Breakfast included</li><li>Free cancellation</li><li>Free WiFi</li></ul></div><div class="price-col"><div class="price"><div class="strike">₹'+Math.round(room.base_price*1.3).toLocaleString('en-IN')+'</div><div class="amount">₹'+Math.round(room.base_price).toLocaleString('en-IN')+'</div><div class="per">per night</div></div><a href="/booking?hotel='+hotel.slug+'" class="btn btn-primary btn-block">Book Room</a></div></div>';
         }
         roomsList.innerHTML = roomHtml;
-      } else {
-        roomsList.innerHTML = '<p class="muted">Room details coming soon.</p>';
-      }
+      } else roomsList.innerHTML = '<p class="muted">Room details coming soon.</p>';
 
-      // Booking sidebar link
       document.getElementById('book-btn').href = '/booking?hotel=' + hotel.slug;
-
-      // Wishlist
-      var currentHotelId = hotel.id;
-      document.getElementById('wishlist-btn').setAttribute('data-hotel-id', currentHotelId);
-      checkWishlistStatus(currentHotelId);
+      document.getElementById('wishlist-btn').setAttribute('data-hotel-id', hotel.id);
+      checkWishlistStatus(hotel.id);
 
       async function checkWishlistStatus(hotelId) {
-        var token = getToken();
-        if (!token) return;
-        try {
-          var res = await fetch('/api/wishlist/', { headers: { 'Authorization': 'Bearer ' + token } });
-          var items = await res.json();
-          var found = items.some(function(item) { return item.hotel_id == hotelId; });
-          updateWishlistButton(found);
-        } catch(e) {}
+        var token = getToken(); if (!token) return;
+        try { var res = await fetch('/api/wishlist/',{headers:{'Authorization':'Bearer '+token}}); var items = await res.json(); updateWishlistButton(items.some(function(item){return item.hotel_id==hotelId;})); } catch(e){}
       }
 
       function updateWishlistButton(isSaved) {
-        var btn = document.getElementById('wishlist-btn');
-        var txt = document.getElementById('wishlist-text');
-        var svg = btn.querySelector('svg');
-        if (isSaved) {
-          txt.textContent = 'Saved';
-          svg.setAttribute('fill', 'var(--danger)');
-          svg.setAttribute('stroke', 'var(--danger)');
-          btn.style.borderColor = 'var(--danger)';
-          btn.style.color = 'var(--danger)';
-        } else {
-          txt.textContent = 'Save';
-          svg.setAttribute('fill', 'none');
-          svg.setAttribute('stroke', 'currentColor');
-          btn.style.borderColor = 'var(--border-strong)';
-          btn.style.color = '';
-        }
+        var btn=document.getElementById('wishlist-btn'), txt=document.getElementById('wishlist-text'), svg=btn.querySelector('svg');
+        if(isSaved){txt.textContent='Saved';svg.setAttribute('fill','var(--danger)');svg.setAttribute('stroke','var(--danger)');btn.style.borderColor='var(--danger)';btn.style.color='var(--danger)';}
+        else{txt.textContent='Save';svg.setAttribute('fill','none');svg.setAttribute('stroke','currentColor');btn.style.borderColor='var(--border-strong)';btn.style.color='';}
       }
 
-      window.toggleWishlist = async function(e) {
-        e.preventDefault();
-        var token = getToken();
-        if (!token) {
-          window.toast('Please login to save hotels', 'error');
-          setTimeout(function() { location.href = '/login'; }, 1000);
-          return;
-        }
-        var hotelId = document.getElementById('wishlist-btn').getAttribute('data-hotel-id');
-        var isSaved = document.getElementById('wishlist-text').textContent === 'Saved';
-        try {
-          var method = isSaved ? 'DELETE' : 'POST';
-          var res = await fetch('/api/wishlist/' + hotelId, {
-            method: method,
-            headers: { 'Authorization': 'Bearer ' + token }
-          });
-          if (res.ok) {
-            updateWishlistButton(!isSaved);
-            window.toast(isSaved ? 'Removed from wishlist' : 'Added to wishlist', 'success');
-          }
-        } catch(err) {
-          window.toast('Failed to update wishlist', 'error');
-        }
+      window.toggleWishlist = async function(e){
+        e.preventDefault(); var token=getToken(); if(!token){window.toast('Please login','error');setTimeout(function(){location.href='/login';},1000);return;}
+        var hotelId=document.getElementById('wishlist-btn').getAttribute('data-hotel-id');
+        var isSaved=document.getElementById('wishlist-text').textContent==='Saved';
+        try{var method=isSaved?'DELETE':'POST';var res=await fetch('/api/wishlist/'+hotelId,{method:method,headers:{'Authorization':'Bearer '+token}});
+        if(res.ok){updateWishlistButton(!isSaved);window.toast(isSaved?'Removed from wishlist':'Added to wishlist','success');}}
+        catch(err){window.toast('Failed','error');}
       };
 
-      // Load reviews
       loadReviews(hotel.id);
     })();
 
@@ -298,29 +269,15 @@
         var res = await fetch('/api/reviews/hotel/' + hotelId);
         var data = await res.json();
         var section = document.getElementById('reviews-section');
-        if (!data.reviews || data.reviews.length === 0) {
-          section.innerHTML = '<p class="muted">No reviews yet. Be the first to review!</p>';
-          return;
-        }
+        if (!data.reviews || data.reviews.length === 0) { section.innerHTML = '<p class="muted">No reviews yet. Be the first to review!</p>'; return; }
         var html = '<div style="display:flex;flex-direction:column;gap:var(--s-4);">';
-        for (var r = 0; r < data.reviews.length; r++) {
-          var review = data.reviews[r];
-          var stars = '';
-          for (var s = 1; s <= 5; s++) { stars += s <= review.rating ? '★' : '☆'; }
-          html += '<div class="card"><div class="card-body">' +
-            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">' +
-              '<div><strong>' + (review.user_name || 'Guest') + '</strong> <span class="badge badge-success" style="margin-left:8px;">Verified</span></div>' +
-              '<span style="color:var(--accent);">' + stars + '</span>' +
-            '</div>' +
-            (review.title ? '<p style="font-weight:600;margin-bottom:4px;">' + review.title + '</p>' : '') +
-            (review.comment ? '<p class="muted">' + review.comment + '</p>' : '') +
-          '</div></div>';
+        for (var r=0;r<data.reviews.length;r++) {
+          var review=data.reviews[r], stars='';
+          for(var s=1;s<=5;s++) stars+=s<=review.rating?'★':'☆';
+          html+='<div class="card"><div class="card-body"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;"><div><strong>'+(review.user_name||'Guest')+'</strong> <span class="badge badge-success" style="margin-left:8px;">Verified</span></div><span style="color:var(--accent);">'+stars+'</span></div>'+(review.comment?'<p class="muted">'+review.comment+'</p>':'')+'</div></div>';
         }
-        html += '</div>';
-        section.innerHTML = html;
-      } catch(e) {
-        document.getElementById('reviews-section').innerHTML = '<p class="muted">Failed to load reviews.</p>';
-      }
+        html+='</div>'; section.innerHTML=html;
+      } catch(e) { document.getElementById('reviews-section').innerHTML='<p class="muted">Failed to load reviews.</p>'; }
     }
   </script>
   <script src="../static/js/partials.js"></script>
